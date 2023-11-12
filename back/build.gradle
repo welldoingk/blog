@@ -30,6 +30,8 @@ dependencies {
 	implementation 'commons-io:commons-io:2.13.0'
 	implementation 'com.querydsl:querydsl-jpa:5.0.0:jakarta'
     annotationProcessor "com.querydsl:querydsl-apt:${dependencyManagement.importedProperties['querydsl.version']}:jakarta"
+	annotationProcessor "jakarta.annotation:jakarta.annotation-api"
+    annotationProcessor "jakarta.persistence:jakarta.persistence-api"
 
 	compileOnly 'org.projectlombok:lombok'
 	runtimeOnly 'com.h2database:h2'
@@ -42,24 +44,19 @@ tasks.named('test') {
 	useJUnitPlatform()
 }
 
-def querydslSrcDir = 'src/main/generated'
+/**
+ * QueryDSL Build Options
+ */
+def querydslDir = "src/main/generated"
 
 sourceSets {
-    main {
-        java {
-            srcDirs += [querydslSrcDir]
-        }
-    }
-}
-
-compileJava {
-    options.compilerArgs << '-Aquerydsl.generatedAnnotationClass=javax.annotation.Generated'
+    main.java.srcDirs += [ querydslDir ]
 }
 
 tasks.withType(JavaCompile) {
-    options.generatedSourceOutputDirectory = file(querydslSrcDir)
+    options.getGeneratedSourceOutputDirectory().set(file(querydslDir))
 }
 
-clean {
-    delete file(querydslSrcDir)
+clean.doLast {
+    file(querydslDir).deleteDir()
 }

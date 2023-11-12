@@ -1,5 +1,6 @@
 package com.kth.blog.board.entity;
 
+import com.kth.blog.board.dto.PostDto;
 import com.kth.blog.board.dto.PostResponseDto;
 import com.kth.blog.util.Timestamped;
 import jakarta.persistence.*;
@@ -28,16 +29,10 @@ public class Post extends Timestamped {
 
     private String content; // 내용
 
-    private String gbVal; // 구분값
-
     @ColumnDefault("0")
     private Long viewCount; // 조회수
 
     private String delYn; // 삭제여부
-
-    @ColumnDefault("999")
-    private Long orders;
-
 
     public Post update(String title, String content) {
         this.title = title;
@@ -55,28 +50,24 @@ public class Post extends Timestamped {
         return this;
     }
 
-    public PostResponseDto toDto() {
-        return PostResponseDto.builder()
+    public PostDto toDto() {
+        return PostDto.builder()
                 .id(id)
                 .title(title)
                 .content(content)
                 .viewCount(viewCount)
                 .boardId(boardId)
-                .gbVal(gbVal)
                 .createAt(getCreateAt())
-                .createAt(getModifiedAt())
-                .orders(orders)
+                .modifiedAt(getModifiedAt())
                 .build();
     }
 
     @Builder
-    public Post(String title, String content, Long viewCount, String delYn, Long boardId, String gbVal, Long orders) {
+    public Post(String title, String content, Long viewCount, String delYn, Long boardId) {
         this.title = title;
         this.content = content;
         this.viewCount = 0L;
         this.delYn = "N";
         this.boardId = boardId;
-        this.gbVal = gbVal;
-        this.orders = orders;
     }
 }

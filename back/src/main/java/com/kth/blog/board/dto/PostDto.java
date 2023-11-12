@@ -11,46 +11,26 @@ import java.util.List;
 
 @Data
 @NoArgsConstructor
-public class PostResponseDto {
+public class PostDto {
 
-    private Long id; // 시퀀스
-
-    private String title; // 제목
-
-    private String content; // 내용
-
-    private Long boardId; // 조회수
-
-    private String gbVal; // 구분
-
-    private LocalDateTime createAt;
-
-    private LocalDateTime modifiedAt;
-
-    private Long viewCount; // 조회수
-
-    private String username; // 사용자 이름
-
-    private String memberId; // 사용자 이름
-
+    private Long id;
+    private Long boardId;
+    private String title;
+    private String content;
+    private Long viewCount;
     private List<MultipartFile> postFiles;
-
-    private Long orders;
+    private LocalDateTime createAt;
+    private LocalDateTime modifiedAt;
 
     @QueryProjection
     @Builder
-    public PostResponseDto(Long id, String title, String content, LocalDateTime createAt, LocalDateTime modifiedAt, Long viewCount,
-                           String username, Long boardId, String gbVal, Long orders) {
+    public PostDto(Long id, Long boardId, String title, String content, Long viewCount, LocalDateTime createAt, LocalDateTime modifiedAt) {
         this.id = id;
+        this.boardId = boardId;
         this.title = title;
         this.content = content;
+        this.viewCount = viewCount;
         this.createAt = createAt;
         this.modifiedAt = modifiedAt;
-        this.viewCount = viewCount;
-        this.username = username;
-        this.boardId = boardId;
-        this.gbVal = gbVal;
-        this.orders = orders;
     }
-
 }

@@ -24,18 +24,17 @@ public class PostRequestDto {
     private LocalDateTime createAt;
     private LocalDateTime modifiedAt;
 
-    @QueryProjection
     @Builder
-    public PostRequestDto(Long id, String title, String content, LocalDateTime createAt, LocalDateTime modifiedAt, Long viewCount,
-                          String username, Long boardId) {
+    public PostRequestDto(Long id, Long boardId, String title, String content, Long viewCount, String username, String memberId, List<MultipartFile> postFiles, LocalDateTime createAt, LocalDateTime modifiedAt) {
         this.id = id;
         this.boardId = boardId;
         this.title = title;
         this.content = content;
         this.viewCount = viewCount;
         this.username = username;
+        this.memberId = memberId;
+        this.postFiles = postFiles;
         this.createAt = createAt;
         this.modifiedAt = modifiedAt;
     }
-
 }

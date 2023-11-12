@@ -1,10 +1,13 @@
 /** @type {import('next').NextConfig} */
+
 const nextConfig = {
+  reactStrictMode: true,
   async rewrites() {
+    //CORS 문제 해결을 위한 설정(proxy 설정)
     return [
       {
         source: "/api/:path*",
-        destination: "http://localhost:8080/api/:path*", // 해당 서버 포트
+        destination: `http://localhost:8080/api/:path*`,
       },
     ];
   },
