@@ -1,0 +1,3223 @@
+파일 경로: ./prettier.config.js
+----------------------------------------
+/** @type {import("prettier").Config} */
+module.exports = {
+  endOfLine: 'lf',
+  semi: false,
+  singleQuote: false,
+  tabWidth: 2,
+  trailingComma: 'es5',
+  importOrder: [
+    '^(react/(.*)$)|^(react$)',
+    '^(next/(.*)$)|^(next$)',
+    '<THIRD_PARTY_MODULES>',
+    '',
+    '^types$',
+    '',
+    '^[./]',
+  ],
+  importOrderSeparation: false,
+  importOrderSortSpecifiers: true,
+  importOrderBuiltinModulesToTop: true,
+  importOrderParserPlugins: ['typescript', 'jsx', 'decorators-legacy'],
+  importOrderMergeDuplicateImports: true,
+  importOrderCombineTypeAndValueImports: true,
+}
+
+
+
+파일 경로: ./next.config.js
+----------------------------------------
+/** @type {import('next').NextConfig} */
+
+const nextConfig = {
+  reactStrictMode: true,
+  async rewrites() {
+    //CORS 문제 해결을 위한 설정(proxy 설정)
+    return [
+      {
+        source: '/api/:path*',
+        destination: `http://localhost:8080/api/:path*`,
+      },
+    ]
+  },
+}
+
+module.exports = nextConfig
+
+
+
+파일 경로: ./tailwind.config.ts
+----------------------------------------
+import type { Config } from 'tailwindcss'
+
+const config: Config = {
+  content: [
+    './src/pages/**/*.{js,ts,jsx,tsx,mdx}',
+    './src/components/**/*.{js,ts,jsx,tsx,mdx}',
+    './src/app/**/*.{js,ts,jsx,tsx,mdx}',
+  ],
+  theme: {
+    extend: {
+      backgroundImage: {
+        'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
+        'gradient-conic':
+          'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
+      },
+      colors: {
+        'petite-orchid-900': '#da9790',
+        'petite-orchid-800': '#dea19b',
+        'petite-orchid-700': '#e1aca6',
+        'petite-orchid-600': '#e5b6b1',
+        'petite-orchid-500': '#e9c1bc',
+        'petite-orchid-400': '#edcbc8',
+        'petite-orchid-300': '#f0d5d3',
+        'petite-orchid-200': '#f4e0de',
+        'petite-orchid-100': '#f8eae9',
+        'petite-orchid-50': '#fbf5f4',
+      },
+    },
+  },
+  plugins: [],
+}
+export default config
+
+
+
+파일 경로: ./tsconfig.json
+----------------------------------------
+{
+  "compilerOptions": {
+    "target": "es5",
+    "lib": ["dom", "dom.iterable", "esnext"],
+    "allowJs": true,
+    "skipLibCheck": true,
+    "strict": true,
+    "noEmit": true,
+    "esModuleInterop": true,
+    "module": "esnext",
+    "moduleResolution": "bundler",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "jsx": "preserve",
+    "incremental": true,
+    "plugins": [
+      {
+        "name": "next"
+      }
+    ],
+    "paths": {
+      "@/*": ["./src/*"]
+    }
+  },
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "src/types/post.ts"],
+  "exclude": ["node_modules"]
+}
+
+
+
+파일 경로: ./next-env.d.ts
+----------------------------------------
+/// <reference types="next" />
+/// <reference types="next/image-types/global" />
+
+// NOTE: This file should not be edited
+// see https://nextjs.org/docs/basic-features/typescript for more information.
+
+
+
+파일 경로: ./package.json
+----------------------------------------
+{
+  "name": "pb-front",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "@emotion/react": "^11.13.0",
+    "@emotion/styled": "^11.13.0",
+    "@headlessui/react": "^1.7.17",
+    "@heroicons/react": "^2.0.18",
+    "@material-tailwind/react": "^2.1.4",
+    "@mui/material": "^5.16.6",
+    "axios": "^1.7.3",
+    "date-fns": "^3.6.0",
+    "next": "14.0.1",
+    "react": "^18",
+    "react-beautiful-dnd": "^13.1.1",
+    "react-dnd": "^16.0.1",
+    "react-dnd-html5-backend": "^16.0.1",
+    "react-dom": "^18",
+    "react-loading-skeleton": "^3.4.0",
+    "swr": "^2.2.5"
+  },
+  "devDependencies": {
+    "@types/node": "^20",
+    "@types/react": "^18",
+    "@types/react-beautiful-dnd": "^13.1.8",
+    "@types/react-dom": "^18",
+    "@typescript-eslint/eslint-plugin": "^5.57.1",
+    "@typescript-eslint/parser": "^5.59.2",
+    "autoprefixer": "^10.0.1",
+    "eslint": "^8",
+    "eslint-config-next": "14.0.1",
+    "eslint-config-prettier": "^8.8.0",
+    "eslint-plugin-import": "^2.22.1",
+    "eslint-plugin-jsx-a11y": "^6.4.1",
+    "eslint-plugin-prettier": "^4.2.1",
+    "eslint-plugin-react": "^7.31.11",
+    "eslint-plugin-react-hooks": "^4.6.0",
+    "eslint-plugin-react-refresh": "^0.3.4",
+    "postcss": "^8",
+    "prettier": "^2.8.7",
+    "tailwindcss": "^3.3.0",
+    "typescript": "^5"
+  }
+}
+
+
+
+파일 경로: ./.eslintrc.json
+----------------------------------------
+{
+  "parser": "@typescript-eslint/parser",
+  "extends": [
+    "next/core-web-vitals",
+    "eslint:recommended",
+    "plugin:@typescript-eslint/recommended",
+    "prettier",
+    "plugin:prettier/recommended",
+    "prettier/prettier",
+    "plugin:react/recommended",
+    "plugin:react-hooks/recommended"
+  ],
+  "plugins": ["prettier", "@typescript-eslint"],
+  "parserOptions": {
+    "sourceType": "module",
+    "ecmaVersion": 2020
+  },
+  "rules": {
+    "@typescript-eslint/no-non-null-assertion": "off",
+    "no-unused-vars": [1, { "args": "after-used", "argsIgnorePattern": "^_" }],
+    "react-hooks/exhaustive-deps": [
+      "warn",
+      {
+        "additionalHooks": "useRecoilCallback"
+      }
+    ],
+    "@typescript-eslint/no-empty-interface": [
+      "error",
+      {
+        "allowSingleExtends": false
+      }
+    ],
+    "react/prop-types": "off",
+    "react/display-name": "off",
+    "react/react-in-jsx-scope": "off"
+  }
+}
+
+
+
+파일 경로: ./.devcontainer/devcontainer.json
+----------------------------------------
+// For format details, see https://aka.ms/devcontainer.json. For config options, see the
+// README at: https://github.com/devcontainers/templates/tree/main/src/typescript-node
+{
+	"name": "Node.js & TypeScript",
+	// Or use a Dockerfile or Docker Compose file. More info: https://containers.dev/guide/dockerfile
+	"image": "mcr.microsoft.com/devcontainers/typescript-node:1-20-bookworm",
+
+	// Features to add to the dev container. More info: https://containers.dev/features.
+	// "features": {},
+
+	// Use 'forwardPorts' to make a list of ports inside the container available locally.
+	// "forwardPorts": [],
+
+	// Use 'postCreateCommand' to run commands after the container is created.
+	// "postCreateCommand": "yarn install",
+
+	// Configure tool-specific properties.
+  "customizations" : {
+    "jetbrains" : {
+      "backend" : "WebStorm"
+    }
+  },
+
+	// Uncomment to connect as root instead. More info: https://aka.ms/dev-containers-non-root.
+	// "remoteUser": "root"
+}
+
+
+
+파일 경로: ./postcss.config.js
+----------------------------------------
+module.exports = {
+  plugins: {
+    tailwindcss: {},
+    autoprefixer: {},
+  },
+}
+
+
+
+파일 경로: ./src/app/page.tsx
+----------------------------------------
+'use client'
+import { FormEvent, useEffect, useCallback, useState } from 'react'
+import { fetchPostById } from '@/lib/api'
+import ErrorModal from '@/components/errorModal'
+import { useRouter } from 'next/navigation'
+
+export default function Home({ params }: { params: { id: string } }) {
+  const [error, setError] = useState<string>('')
+  const router = useRouter()
+  const [post, setPost] = useState<PostData>({
+    id: '',
+    title: '',
+    content: '',
+    boardId: '1',
+    gbVal: '',
+    createAt: '',
+    modifiedAt: '',
+    viewCount: '',
+    username: '',
+    memberId: '',
+    orders: '',
+  })
+
+  const getPostData = async (id: string) => {
+    try {
+      const res = await fetchPostById(id)
+      setPost(res)
+    } catch (error) {
+      setError('게시글을 불러오는 데 실패했습니다.')
+    }
+  }
+
+  const saveData = async (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault()
+    if (!post.title || !post.content) {
+      setError('제목과 내용을 모두 입력해주세요.')
+      return
+    }
+    try {
+      const res = await fetch(`/api/post`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(post),
+      })
+
+      if (res.ok) {
+        router.push('/posts') // 저장 후 게시글 목록으로 이동
+      } else {
+        setError('게시글 저장에 실패했습니다.')
+      }
+    } catch (error) {
+      setError('네트워크 오류가 발생했습니다.')
+    }
+  }
+
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+  ) => {
+    const { id, value } = e.target
+    setPost((prevPost) => ({ ...prevPost, [id]: value }))
+  }
+
+  const handleCancel = () => {
+    router.back() // 이전 페이지로 돌아가기
+  }
+
+  useEffect(() => {
+    if (params.id) {
+      getPostData(params.id)
+    }
+  }, [params.id])
+
+  return (
+    <div className="container">
+      <ErrorModal error={error} onClose={() => setError('')} />
+      <form onSubmit={saveData}>
+        <header className="rounded-t-xl space-y-4 p-4 sm:px-8 sm:py-6 lg:p-4 xl:px-8 xl:py-6 dark:highlight-white/10">
+          <div className="flex items-center justify-between">
+            <h2 className="font-semibold text-slate-900 dark:text-white">
+              글 작성
+            </h2>
+          </div>
+          <div className="group relative rounded-md dark:bg-slate-700 dark:highlight-white/10 dark:focus-within:bg-transparent">
+            <input
+              type="text"
+              id="title"
+              aria-label="title"
+              placeholder="제목을 입력하세요"
+              className="appearance-none w-full text-sm leading-8 bg-transparent text-slate-900 placeholder:text-slate-400 rounded-md py-2 pl-5 pr-5 ring-1 ring-slate-200 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 dark:text-slate-100 dark:placeholder:text-slate-500 dark:ring-0 dark:focus:ring-2"
+              value={post.title}
+              onChange={handleChange}
+            />
+          </div>
+          <div className="relative rounded-md dark:bg-slate-700 dark:highlight-white/10 dark:focus-within:bg-transparent">
+            <textarea
+              id="content"
+              name="content"
+              rows={10}
+              aria-label="content"
+              placeholder="내용을 입력하세요"
+              className="appearance-none w-full text-sm bg-transparent text-slate-900 placeholder:text-slate-400 rounded-md py-2 pl-5 pr-5 ring-1 ring-slate-200 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 dark:text-slate-100 dark:placeholder:text-slate-500 dark:ring-0 dark:focus:ring-2"
+              value={post.content}
+              onChange={handleChange}
+            />
+          </div>
+        </header>
+        <div className="mt-6 flex items-center justify-end gap-x-1">
+          <button
+            type="button"
+            onClick={handleCancel}
+            className="rounded-md bg-slate-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-slate-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-slate-600"
+          >
+            취소
+          </button>
+          <button
+            type="submit"
+            className="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+          >
+            저장
+          </button>
+        </div>
+      </form>
+    </div>
+  )
+}
+
+
+
+파일 경로: ./src/app/layout.tsx
+----------------------------------------
+import type { Metadata } from 'next'
+import { Inter } from 'next/font/google'
+import Navigation from '../components/navigation'
+import './globals.css'
+
+const inter = Inter({
+  subsets: ['latin'],
+})
+
+export const metadata: Metadata = {
+  title: 'Home',
+  description: 'Home',
+}
+
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode
+}) {
+  return (
+    <html lang="en">
+      <body className={inter.className}>
+        <Navigation title={metadata.title} />
+        <div className="container mx-auto">{children}</div>
+      </body>
+    </html>
+  )
+}
+
+
+
+파일 경로: ./src/app/globals.css
+----------------------------------------
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@font-face {
+  font-family: 'Material Icons';
+  font-style: normal;
+  font-weight: 400;
+  src: url(https://fonts.gstatic.com/s/materialicons/v141/flUhRq6tzZclQEJ-Vdg-IuiaDsNc.woff2)
+    format('woff2');
+}
+/* fallback */
+@font-face {
+  font-family: 'Material Icons Outlined';
+  font-style: normal;
+  font-weight: 400;
+  src: url(https://fonts.gstatic.com/s/materialiconsoutlined/v109/gok-H7zzDkdnRel8-DQ6KAXJ69wP1tGnf4ZGhUce.woff2)
+    format('woff2');
+}
+/* fallback */
+@font-face {
+  font-family: 'Material Icons Round';
+  font-style: normal;
+  font-weight: 400;
+  src: url(https://fonts.gstatic.com/s/materialiconsround/v108/LDItaoyNOAY6Uewc665JcIzCKsKc_M9flwmP.woff2)
+    format('woff2');
+}
+/* fallback */
+@font-face {
+  font-family: 'Material Icons Sharp';
+  font-style: normal;
+  font-weight: 400;
+  src: url(https://fonts.gstatic.com/s/materialiconssharp/v109/oPWQ_lt5nv4pWNJpghLP75WiFR4kLh3kvmvR.woff2)
+    format('woff2');
+}
+/* fallback */
+@font-face {
+  font-family: 'Material Icons Two Tone';
+  font-style: normal;
+  font-weight: 400;
+  src: url(https://fonts.gstatic.com/s/materialiconstwotone/v112/hESh6WRmNCxEqUmNyh3JDeGxjVVyMg4tHGctNCu0.woff2)
+    format('woff2');
+}
+
+body {
+  --tw-bg-opacity: 1;
+  background-color: rgb(15 23 42 / var(--tw-bg-opacity));
+  --google-font-color-materialiconstwotone: none;
+}
+.table {
+  border-spacing: 0 15px;
+}
+
+i {
+  font-size: 1rem !important;
+}
+
+.table tr {
+  border-radius: 20px;
+}
+
+tr td:nth-child(n + 5),
+tr th:nth-child(n + 5) {
+  border-radius: 0 0.625rem 0.625rem 0;
+}
+
+tr td:nth-child(1),
+tr th:nth-child(1) {
+  border-radius: 0.625rem 0 0 0.625rem;
+}
+
+.material-icons {
+  font-family: 'Material Icons';
+  font-weight: normal;
+  font-style: normal;
+  font-size: 24px;
+  line-height: 1;
+  letter-spacing: normal;
+  text-transform: none;
+  display: inline-block;
+  white-space: nowrap;
+  word-wrap: normal;
+  direction: ltr;
+  -webkit-font-feature-settings: 'liga';
+  -webkit-font-smoothing: antialiased;
+}
+
+.material-icons-outlined {
+  font-family: 'Material Icons Outlined';
+  font-weight: normal;
+  font-style: normal;
+  font-size: 24px;
+  line-height: 1;
+  letter-spacing: normal;
+  text-transform: none;
+  display: inline-block;
+  white-space: nowrap;
+  word-wrap: normal;
+  direction: ltr;
+  -webkit-font-feature-settings: 'liga';
+  -webkit-font-smoothing: antialiased;
+}
+
+.material-icons-round {
+  font-family: 'Material Icons Round';
+  font-weight: normal;
+  font-style: normal;
+  font-size: 24px;
+  line-height: 1;
+  letter-spacing: normal;
+  text-transform: none;
+  display: inline-block;
+  white-space: nowrap;
+  word-wrap: normal;
+  direction: ltr;
+  -webkit-font-feature-settings: 'liga';
+  -webkit-font-smoothing: antialiased;
+}
+
+.material-icons-sharp {
+  font-family: 'Material Icons Sharp';
+  font-weight: normal;
+  font-style: normal;
+  font-size: 24px;
+  line-height: 1;
+  letter-spacing: normal;
+  text-transform: none;
+  display: inline-block;
+  white-space: nowrap;
+  word-wrap: normal;
+  direction: ltr;
+  -webkit-font-feature-settings: 'liga';
+  -webkit-font-smoothing: antialiased;
+}
+
+.material-icons-two-tone {
+  font-family: 'Material Icons Two Tone';
+  font-weight: normal;
+  font-style: normal;
+  font-size: 24px;
+  line-height: 1;
+  letter-spacing: normal;
+  text-transform: none;
+  display: inline-block;
+  white-space: nowrap;
+  word-wrap: normal;
+  direction: ltr;
+  -webkit-font-feature-settings: 'liga';
+  -webkit-font-smoothing: antialiased;
+}
+
+
+
+파일 경로: ./src/app/calendar/page.tsx
+----------------------------------------
+import React from 'react'
+import Calendar from '@/components/Calendar/calendar'
+
+export default function CalendarPage() {
+  return (
+    <div className="container mx-auto p-4">
+      <h1 className="text-2xl font-bold mb-4">My Calendar</h1>
+      <Calendar />
+    </div>
+  )
+}
+
+
+
+파일 경로: ./src/app/posts/page.tsx
+----------------------------------------
+import Posts from '@/components/Posts'
+
+export default function PostsPage() {
+  return <Posts />
+}
+
+
+
+파일 경로: ./src/app/posts/detail/[id]/page.tsx
+----------------------------------------
+import * as dateFns from 'date-fns'
+import Link from 'next/link'
+import { fetchPostById } from '@/lib/api'
+
+export default async function Detail({ params }: { params: { id: string } }) {
+  const res = await fetchPostById(params.id)
+  console.log('return => ')
+  console.log(JSON.stringify(res))
+  return (
+    <section className="pt-20 pb-20">
+      <header className="bg-slate-800 space-y-4 p-4 rounded-t-2xl sm:px-8 sm:py-6 lg:p-4 xl:px-8 xl:py-6">
+        <div className="flex items-center justify-between">
+          <div>
+            {/* <h2 className="font-semibold text-gray-50">Projects</h2>
+            <p className="font-semibold text-gray-50 mt-1 text-sm leading-6">
+              작성자
+            </p> */}
+            <figcaption className="font-medium">
+              <div className="text-3xl text-sky-500 dark:text-sky-400">
+                {res.postDtos[0].title}
+              </div>
+              <div className="text-slate-700 dark:text-slate-500">
+                {res.postDtos[0].username ? res.postDtos[0].username : null}
+              </div>
+            </figcaption>
+          </div>
+          <div className="flex">
+            <Link
+              href={`/posts/write/${res.postDtos[0].id}`}
+              className="mr-2 hover:bg-blue-400 group flex items-center rounded-md bg-blue-500 text-white text-sm font-medium pl-2 pr-3 py-2 shadow-sm"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="16"
+                height="16"
+                fill="currentColor"
+                className="bi bi-pencil-square"
+                viewBox="0 0 16 16"
+              >
+                <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z" />
+                <path
+                  fillRule="evenodd"
+                  d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5z"
+                />
+              </svg>
+              Edit
+            </Link>
+            <Link
+              href="/posts"
+              className="hover:bg-blue-400 group flex items-center rounded-md bg-blue-500 text-white text-sm font-medium pl-2 pr-3 py-2 shadow-sm"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="16"
+                height="16"
+                fill="currentColor"
+                className="bi bi-list-task"
+                viewBox="0 0 16 16"
+              >
+                <path
+                  fillRule="evenodd"
+                  d="M2 2.5a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5V3a.5.5 0 0 0-.5-.5zM3 3H2v1h1z"
+                />
+                <path d="M5 3.5a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5M5.5 7a.5.5 0 0 0 0 1h9a.5.5 0 0 0 0-1zm0 4a.5.5 0 0 0 0 1h9a.5.5 0 0 0 0-1z" />
+                <path
+                  fillRule="evenodd"
+                  d="M1.5 7a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5H2a.5.5 0 0 1-.5-.5zM2 7h1v1H2zm0 3.5a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5zm1 .5H2v1h1z"
+                />
+              </svg>
+              <span className="pl-1">List</span>
+            </Link>
+          </div>
+        </div>
+
+        {/* <form className="group relative">
+          <svg
+            width="20"
+            height="20"
+            fill="currentColor"
+            className="absolute left-3 top-1/2 -mt-2.5 text-slate-400 pointer-events-none group-focus-within:text-blue-500"
+            aria-hidden="true"
+          >
+            <path
+              fillRule="evenodd"
+              clipRule="evenodd"
+              d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z"
+            />
+          </svg>
+          <input
+            className="focus:ring-2 focus:ring-blue-500 focus:outline-none appearance-none w-full text-sm leading-6 text-slate-900 placeholder-slate-400 rounded-md py-2 pl-10 ring-1 ring-slate-200 shadow-sm"
+            type="text"
+            aria-label="Filter projects"
+            placeholder="Filter projects..."
+          />
+        </form> */}
+      </header>
+      <div className="bg-slate-700  p-4 rounded-b-2xl">
+        <blockquote className="m-8">
+          <p className="text-lg font-medium text-white">
+            {res.postDtos[0].content}
+          </p>
+        </blockquote>
+      </div>
+    </section>
+  )
+}
+
+
+
+파일 경로: ./src/app/posts/detail/[id]/loading.tsx
+----------------------------------------
+import Skeleton from 'react-loading-skeleton'
+import 'react-loading-skeleton/dist/skeleton.css'
+
+export default function Loading() {
+  return (
+    <>
+      <section className="pt-20 pb-20">
+        <header className="bg-slate-800 space-y-4 p-4 rounded-t-2xl sm:px-8 sm:py-6 lg:p-4 xl:px-8 xl:py-6">
+          <div className="flex items-center justify-between">
+            <div>
+              <figcaption className="font-medium">
+                <div className="text-3xl text-sky-500 dark:text-sky-400">
+                  <Skeleton className="circle" width={'100px'} />
+                </div>
+                <div className="text-slate-700 dark:text-slate-500">
+                  <Skeleton width={'100px'} />
+                </div>
+              </figcaption>
+            </div>
+            <Skeleton width={'100px'} />
+          </div>
+        </header>
+        <div className="bg-slate-700  p-4 rounded-b-2xl">
+          <blockquote className="m-8">
+            <p className="text-lg font-medium text-white">
+              <Skeleton width={'100px'} count={5} />
+            </p>
+          </blockquote>
+        </div>
+      </section>
+    </>
+  )
+}
+
+
+
+파일 경로: ./src/app/posts/loading.tsx
+----------------------------------------
+import PostLoading from '@/components/postLoading'
+import Skeleton from 'react-loading-skeleton'
+import 'react-loading-skeleton/dist/skeleton.css'
+
+export default function Loading() {
+  return (
+    <>
+      <section className="pt-20">
+        <header className="bg-slate-800 space-y-4 p-4 rounded-t-2xl sm:px-8 sm:py-6 lg:p-4 xl:px-8 xl:py-6">
+          <div className="flex items-center justify-between">
+            <h1 className="text-white p-5">
+              <Skeleton width={'100px'} />
+            </h1>
+          </div>
+        </header>
+      </section>
+      <div className="bg-slate-700 p-4 rounded-b-2xl">
+        <blockquote className="m-8">
+          <div className="flex-auto items-center justify-center min-h-full">
+            <div className="flex flex-col space-y-4">
+              <PostLoading />
+              <PostLoading />
+              <PostLoading />
+              <PostLoading />
+              <PostLoading />
+              <PostLoading />
+              <PostLoading />
+              <PostLoading />
+              <PostLoading />
+              <PostLoading />
+            </div>
+          </div>
+        </blockquote>
+      </div>
+    </>
+  )
+}
+
+
+
+파일 경로: ./src/app/posts/write/[id]/page.tsx
+----------------------------------------
+'use client'
+import { FormEvent, useEffect, useState } from 'react'
+import { fetchPostById } from '@/lib/api'
+import ErrorModal from '@/components/errorModal'
+import { useRouter } from 'next/navigation'
+
+export default function Home({ params }: { params: { id: string } }) {
+  const router = useRouter()
+  const [error, setError] = useState<string>('')
+  const [loading, setLoading] = useState<boolean>(false)
+  const [post, setPost] = useState<PostData>({
+    id: '',
+    title: '',
+    content: '',
+    boardId: '1',
+    gbVal: '',
+    createAt: '',
+    modifiedAt: '',
+    viewCount: '',
+    username: '',
+    memberId: '',
+    orders: '',
+  })
+
+  const getPostData = async (id: string) => {
+    try {
+      const res = await fetchPostById(id)
+      setPost(res)
+    } catch (error) {
+      setError('게시글을 불러오는 데 실패했습니다.')
+    }
+  }
+
+  const saveData = async (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault()
+    if (!post.title || !post.content) {
+      setError('제목과 내용을 모두 입력해주세요.')
+      return
+    }
+    try {
+      setLoading(true)
+      const res = await fetch(`/api/post`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(post),
+      })
+
+      if (res.ok) {
+        router.push('/posts') // 저장 후 게시글 목록으로 이동
+      } else {
+        setError('게시글 저장에 실패했습니다.')
+      }
+    } catch (error) {
+      setError('네트워크 오류가 발생했습니다.')
+      setLoading(false)
+    }
+    setLoading(false)
+  }
+
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+  ) => {
+    const { id, value } = e.target
+    setPost((prevPost) => ({ ...prevPost, [id]: value }))
+  }
+
+  const handleCancel = () => {
+    router.back() // 이전 페이지로 돌아가기
+  }
+
+  useEffect(() => {
+    if (params.id && params.id != 'New') {
+      getPostData(params.id)
+    }
+  }, [params.id])
+
+  return (
+    <div className="container">
+      <ErrorModal error={error} onClose={() => setError('')} />
+      <form onSubmit={saveData}>
+        <header className="rounded-t-xl space-y-4 p-4 sm:px-8 sm:py-6 lg:p-4 xl:px-8 xl:py-6 dark:highlight-white/10">
+          <div className="flex items-center justify-between">
+            <h2 className="font-semibold text-slate-900 dark:text-white">
+              글 작성
+            </h2>
+          </div>
+          <div className="group relative rounded-md dark:bg-slate-700 dark:highlight-white/10 dark:focus-within:bg-transparent">
+            <input
+              type="text"
+              id="title"
+              aria-label="title"
+              placeholder="제목을 입력하세요"
+              className="appearance-none w-full text-sm leading-8 bg-transparent text-slate-900 placeholder:text-slate-400 rounded-md py-2 pl-5 pr-5 ring-1 ring-slate-200 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 dark:text-slate-100 dark:placeholder:text-slate-500 dark:ring-0 dark:focus:ring-2"
+              value={post.title}
+              onChange={handleChange}
+            />
+          </div>
+          <div className="relative rounded-md dark:bg-slate-700 dark:highlight-white/10 dark:focus-within:bg-transparent">
+            <textarea
+              id="content"
+              name="content"
+              rows={10}
+              aria-label="content"
+              placeholder="내용을 입력하세요"
+              className="appearance-none w-full text-sm bg-transparent text-slate-900 placeholder:text-slate-400 rounded-md py-2 pl-5 pr-5 ring-1 ring-slate-200 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 dark:text-slate-100 dark:placeholder:text-slate-500 dark:ring-0 dark:focus:ring-2"
+              value={post.content}
+              onChange={handleChange}
+            />
+          </div>
+        </header>
+        <div className="mt-6 flex items-center justify-end gap-x-1">
+          <button
+            type="button"
+            onClick={handleCancel}
+            className="rounded-md bg-slate-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-slate-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-slate-600"
+          >
+            취소
+          </button>
+          <button
+            type="submit"
+            disabled={loading}
+            className="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+          >
+            저장
+          </button>
+        </div>
+      </form>
+    </div>
+  )
+}
+
+
+
+파일 경로: ./src/components/navigation/index.tsx
+----------------------------------------
+'use client'
+import { useState } from 'react'
+import Navbar from './navbar'
+
+const Navigation = (props: PostData) => {
+  // toggle sidebar
+  const [isOpen, setIsOpen] = useState(false)
+  const toggle = () => {
+    setIsOpen(!isOpen)
+  }
+  return (
+    <>
+      <Navbar title={props.title} />
+    </>
+  )
+}
+
+export default Navigation
+
+
+
+파일 경로: ./src/components/navigation/navbar/index.tsx
+----------------------------------------
+import Link from 'next/link'
+import { Fragment } from 'react'
+import { Disclosure, Menu, Transition } from '@headlessui/react'
+import { Bars3Icon, BellIcon, XMarkIcon } from '@heroicons/react/24/outline'
+
+const Navbar = (props: any) => {
+  const navigation = [
+    { name: 'Gallery', href: '/gallery', current: props.title == 'Gallery' },
+    { name: 'Posts', href: '/posts', current: props.title == 'Posts' },
+    { name: 'About', href: '/about', current: props.title == 'About' },
+    { name: 'Calendar', href: '/calendar', current: props.title == 'Calendar.tsx' },
+  ]
+
+  function classNames(...classes: any) {
+    return classes.filter(Boolean).join(' ')
+  }
+
+  return (
+    <Disclosure as="nav" className="bg-gray-800">
+      {({ open }) => (
+        <>
+          <div className="mx-auto max-w-full px-2 sm:px-6 lg:px-8">
+            <div className="relative flex h-16 items-center justify-between">
+              <div className="absolute inset-y-0 left-0 flex items-center sm:hidden">
+                {/* Mobile menu button*/}
+                <Disclosure.Button className="relative inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white">
+                  <span className="absolute -inset-0.5" />
+                  <span className="sr-only">Open main menu</span>
+                  {open ? (
+                    <XMarkIcon className="block h-6 w-6" aria-hidden="true" />
+                  ) : (
+                    <Bars3Icon className="block h-6 w-6" aria-hidden="true" />
+                  )}
+                </Disclosure.Button>
+              </div>
+              <div className="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
+                <div className="flex flex-shrink-0 items-center">
+                  <img
+                    className="h-8 w-auto"
+                    src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=500"
+                    alt="Your Company"
+                  />
+                  {/* <p className="h-8 w-auto text-white">PB</p> */}
+                </div>
+                <div className="hidden sm:ml-6 sm:block">
+                  <div className="flex space-x-4">
+                    {navigation.map((item) => (
+                      <Link
+                        key={item.name}
+                        href={item.href}
+                        className={classNames(
+                          item.current
+                            ? 'bg-gray-900 text-white'
+                            : 'text-gray-300 hover:bg-gray-700 hover:text-white',
+                          'rounded-md px-3 py-2 text-sm font-medium',
+                        )}
+                        aria-current={item.current ? 'page' : undefined}
+                      >
+                        {item.name}
+                      </Link>
+                    ))}
+                  </div>
+                </div>
+              </div>
+              <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
+                <button
+                  type="button"
+                  className="relative rounded-full bg-gray-800 p-1 text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
+                >
+                  <span className="absolute -inset-1.5" />
+                  <span className="sr-only">View notifications</span>
+                  <BellIcon className="h-6 w-6" aria-hidden="true" />
+                </button>
+
+                {/* Profile dropdown */}
+                <Menu as="div" className="relative ml-3">
+                  <div>
+                    <Menu.Button className="relative flex rounded-full bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
+                      <span className="absolute -inset-1.5" />
+                      <span className="sr-only">Open user menu</span>
+                      <img
+                        className="h-8 w-8 rounded-full"
+                        src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
+                        alt=""
+                      />
+                    </Menu.Button>
+                  </div>
+                  <Transition
+                    as={Fragment}
+                    enter="transition ease-out duration-100"
+                    enterFrom="transform opacity-0 scale-95"
+                    enterTo="transform opacity-100 scale-100"
+                    leave="transition ease-in duration-75"
+                    leaveFrom="transform opacity-100 scale-100"
+                    leaveTo="transform opacity-0 scale-95"
+                  >
+                    <Menu.Items className="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+                      <Menu.Item>
+                        {({ active }) => (
+                          <a
+                            href="#"
+                            className={classNames(
+                              active ? 'bg-gray-100' : '',
+                              'block px-4 py-2 text-sm text-gray-700',
+                            )}
+                          >
+                            Your Profile
+                          </a>
+                        )}
+                      </Menu.Item>
+                      <Menu.Item>
+                        {({ active }) => (
+                          <a
+                            href="#"
+                            className={classNames(
+                              active ? 'bg-gray-100' : '',
+                              'block px-4 py-2 text-sm text-gray-700',
+                            )}
+                          >
+                            Settings
+                          </a>
+                        )}
+                      </Menu.Item>
+                      <Menu.Item>
+                        {({ active }) => (
+                          <a
+                            href="#"
+                            className={classNames(
+                              active ? 'bg-gray-100' : '',
+                              'block px-4 py-2 text-sm text-gray-700',
+                            )}
+                          >
+                            Sign out
+                          </a>
+                        )}
+                      </Menu.Item>
+                    </Menu.Items>
+                  </Transition>
+                </Menu>
+              </div>
+            </div>
+          </div>
+
+          <Disclosure.Panel className="sm:hidden">
+            <div className="space-y-1 px-2 pb-3 pt-2">
+              {navigation.map((item) => (
+                <Disclosure.Button
+                  key={item.name}
+                  as="a"
+                  href={item.href}
+                  className={classNames(
+                    item.current
+                      ? 'bg-gray-900 text-white'
+                      : 'text-gray-300 hover:bg-gray-700 hover:text-white',
+                    'block rounded-md px-3 py-2 text-base font-medium',
+                  )}
+                  aria-current={item.current ? 'page' : undefined}
+                >
+                  {item.name}
+                </Disclosure.Button>
+              ))}
+            </div>
+          </Disclosure.Panel>
+        </>
+      )}
+    </Disclosure>
+  )
+}
+
+export default Navbar
+
+
+
+파일 경로: ./src/components/Post/post.tsx
+----------------------------------------
+import Link from 'next/link'
+import { Post as PostType } from '@/lib/api'
+
+const Post = (props: PostType) => {
+  // toggle sidebar
+
+  return (
+    <>
+      <div
+        key={props.id}
+        className="flex flex-col p-4 bg-gray-800 border border-gray-800 shadow-md hover:text-green-500 text-gray-400 hover:shodow-lg rounded-2xl transition ease-in duration-500  transform hover:scale-105 cursor-pointer"
+      >
+        <Link href={`/posts/detail/${props.id}`}>
+          <div className="flex items-center justify-between">
+            <div className="flex items-center mr-auto">
+              <div className="-space-x-5 flex ">
+                {/* <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          strokeWidth={1.5}
+                          stroke="currentColor"
+                          className="w-6 h-6"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z"
+                          />
+                        </svg> */}
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  strokeWidth={1.5}
+                  stroke="currentColor"
+                  className="w-6 h-6"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="m11.25 11.25.041-.02a.75.75 0 0 1 1.063.852l-.708 2.836a.75.75 0 0 0 1.063.853l.041-.021M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9-3.75h.008v.008H12V8.25Z"
+                  />
+                </svg>
+              </div>
+
+              <div className="flex flex-col ml-3 min-w-0">
+                <div className="font-medium leading-none text-gray-100">
+                  {props.title}
+                </div>
+                <p className="text-sm text-gray-500 leading-none mt-1 truncate">
+                  {props.createdAt}
+                </p>
+              </div>
+            </div>
+            <div className="flex flex-col ml-3 min-w-0">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="h-6 w-6 ml-2"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  d="M9 5l7 7-7 7"
+                ></path>
+              </svg>
+            </div>
+          </div>
+        </Link>
+      </div>
+    </>
+  )
+}
+
+export default Post
+
+
+
+파일 경로: ./src/components/Calendar/calendar.tsx
+----------------------------------------
+'use client'
+import React, { useState, useEffect, memo, useMemo, useCallback } from 'react'
+import {
+  format,
+  startOfWeek,
+  endOfWeek,
+  startOfDay,
+  endOfDay,
+  addDays,
+  startOfMonth,
+  endOfMonth,
+  isSameMonth,
+  isSameDay,
+  addMonths,
+  subMonths,
+  parseISO,
+  eachDayOfInterval,
+  eachHourOfInterval,
+  getDay,
+} from 'date-fns'
+import {
+  ChevronLeftIcon,
+  ChevronRightIcon,
+  PlusIcon,
+} from '@heroicons/react/24/solid'
+import { DndProvider, useDrag, useDrop } from 'react-dnd'
+import { HTML5Backend } from 'react-dnd-html5-backend'
+import { useEventApi, Event } from '@/lib/api'
+
+interface CalendarProps {
+  initialDate?: Date
+  initialView?: 'month' | 'week' | 'day'
+}
+
+const colorOptions = [
+  'bg-red-500',
+  'bg-blue-500',
+  'bg-green-500',
+  'bg-yellow-500',
+  'bg-purple-500',
+  'bg-pink-500',
+]
+
+interface DraggableEventProps {
+  event: Event
+  onEventClick: (event: Event) => void
+}
+
+const DraggableEvent: React.FC<DraggableEventProps> = memo(
+  ({ event, onEventClick }) => {
+    const [{ isDragging }, drag] = useDrag(() => ({
+      type: 'EVENT',
+      item: { id: event.id, event },
+      collect: (monitor) => ({
+        isDragging: !!monitor.isDragging(),
+      }),
+    }))
+
+    return (
+      <div
+        ref={drag}
+        className={`text-xs text-white p-1 rounded truncate ${event.color} ${
+          isDragging ? 'opacity-50' : ''
+        }`}
+        onClick={(e) => {
+          e.stopPropagation()
+          onEventClick(event)
+        }}
+      >
+        {event.title}
+      </div>
+    )
+  },
+)
+
+DraggableEvent.displayName = 'DraggableEvent'
+
+interface DroppableCellProps {
+  day: Date
+  events: Event[]
+  onEventClick: (event: Event) => void
+  onDateClick: (day: Date) => void
+  onEventDrop: (eventId: string, date: Date) => void
+  isCurrentMonth: boolean
+  isSelected: boolean
+}
+
+const DroppableCell: React.FC<DroppableCellProps> = memo(
+  ({
+    day,
+    events,
+    onEventClick,
+    onDateClick,
+    onEventDrop,
+    isCurrentMonth,
+    isSelected,
+  }) => {
+    const [{ isOver }, drop] = useDrop(() => ({
+      accept: 'EVENT',
+      drop: (item: { id: string; event: Event }) => onEventDrop(item.id, day),
+      collect: (monitor) => ({
+        isOver: !!monitor.isOver(),
+      }),
+    }))
+
+    return (
+      <div
+        ref={drop}
+        className={`min-h-[100px] p-2 border border-slate-700 ${
+          !isCurrentMonth
+            ? 'bg-slate-800 text-gray-500'
+            : isSelected
+            ? 'bg-slate-600'
+            : ''
+        } ${
+          isOver ? 'bg-slate-600' : ''
+        } hover:bg-slate-700 transition-colors cursor-pointer`}
+        onClick={() => onDateClick(day)}
+      >
+        <span
+          className={`text-sm font-medium ${
+            isCurrentMonth ? 'text-gray-300' : 'text-gray-500'
+          }`}
+        >
+          {format(day, 'd')}
+        </span>
+        <div className="mt-1 space-y-1">
+          {events
+            .filter((event) => isSameDay(parseISO(event.start), day))
+            .map((event) => (
+              <DraggableEvent
+                key={event.id}
+                event={event}
+                onEventClick={onEventClick}
+              />
+            ))}
+        </div>
+      </div>
+    )
+  },
+)
+
+DroppableCell.displayName = 'DroppableCell'
+
+const Calendar: React.FC<CalendarProps> = memo(
+  ({ initialDate = new Date(), initialView = 'month' }) => {
+    const [currentDate, setCurrentDate] = useState<Date>(initialDate)
+    const [selectedDate, setSelectedDate] = useState<Date>(initialDate)
+    const [view, setView] = useState<'month' | 'week' | 'day'>(initialView)
+    const [events, setEvents] = useState<Event[]>([])
+    const [isEventModalOpen, setIsEventModalOpen] = useState<boolean>(false)
+    const [currentEvent, setCurrentEvent] = useState<Event>({
+      id: '',
+      title: '',
+      start: '',
+      end: '',
+      color: colorOptions[0],
+    })
+    const [isEditMode, setIsEditMode] = useState<boolean>(false)
+
+    const {
+      fetchEvents,
+      createEvent,
+      updateEvent,
+      deleteEvent,
+      loading,
+      error,
+    } = useEventApi()
+
+    useEffect(() => {
+      const loadEvents = async () => {
+        try {
+          const fetchedEvents = await fetchEvents()
+          if (Array.isArray(fetchedEvents)) {
+            setEvents(fetchedEvents)
+          } else {
+            console.error('Fetched events is not an array:', fetchedEvents)
+          }
+        } catch (error) {
+          console.error('Failed to load events:', error)
+        }
+      }
+      loadEvents()
+    }, [fetchEvents])
+
+    const onDateClick = useCallback((day: Date) => {
+      setSelectedDate(day)
+      setCurrentEvent({
+        id: '',
+        title: '',
+        start: format(day, "yyyy-MM-dd'T'HH:mm"),
+        end: format(addDays(day, 1), "yyyy-MM-dd'T'HH:mm"),
+        color: colorOptions[0],
+      })
+      setIsEditMode(false)
+      setIsEventModalOpen(true)
+    }, [])
+
+    const onEventClick = useCallback((event: Event) => {
+      setCurrentEvent(event)
+      setIsEditMode(true)
+      setIsEventModalOpen(true)
+    }, [])
+
+    const handleEventAction = useCallback(async () => {
+      try {
+        if (isEditMode) {
+          const updatedEvent = await updateEvent(currentEvent)
+          if (updatedEvent) {
+            setEvents((prevEvents) =>
+              prevEvents.map((e) =>
+                e.id === updatedEvent.id ? updatedEvent : e,
+              ),
+            )
+          }
+        } else {
+          const newEvent = await createEvent(currentEvent)
+          if (newEvent) {
+            setEvents((prevEvents) => [...prevEvents, newEvent])
+          }
+        }
+        setIsEventModalOpen(false)
+      } catch (error) {
+        console.error('Failed to save event:', error)
+      }
+    }, [createEvent, updateEvent, currentEvent, isEditMode])
+
+    const handleDeleteEvent = useCallback(async () => {
+      try {
+        await deleteEvent(currentEvent.id)
+        setEvents((prevEvents) =>
+          prevEvents.filter((e) => e.id !== currentEvent.id),
+        )
+        setIsEventModalOpen(false)
+      } catch (error) {
+        console.error('Failed to delete event:', error)
+      }
+    }, [deleteEvent, currentEvent.id])
+
+    const onEventDrop = useCallback(
+      async (eventId: string, newDate: Date) => {
+        try {
+          const eventToUpdate = events.find((e) => e.id === eventId)
+          if (!eventToUpdate) return
+
+          const duration =
+            parseISO(eventToUpdate.end).getTime() -
+            parseISO(eventToUpdate.start).getTime()
+          const newStart = newDate
+          const newEnd = new Date(newStart.getTime() + duration)
+
+          const updatedEvent = {
+            ...eventToUpdate,
+            start: format(newStart, "yyyy-MM-dd'T'HH:mm"),
+            end: format(newEnd, "yyyy-MM-dd'T'HH:mm"),
+          }
+
+          const savedEvent = await updateEvent(updatedEvent)
+          if (savedEvent) {
+            setEvents((prevEvents) =>
+              prevEvents.map((e) => (e.id === savedEvent.id ? savedEvent : e)),
+            )
+          }
+        } catch (error) {
+          console.error('Failed to update event:', error)
+        }
+      },
+      [updateEvent, events],
+    )
+
+    const renderHeader = useCallback(() => {
+      let dateFormat = 'MMMM yyyy'
+      if (view === 'week') dateFormat = "MMMM d, yyyy 'to' MMMM d, yyyy"
+      if (view === 'day') dateFormat = 'MMMM d, yyyy'
+
+      return (
+        <div className="flex justify-between items-center mb-4">
+          <button
+            onClick={() => changeDate(-1)}
+            className="p-2 rounded-full hover:bg-slate-700 transition-colors"
+          >
+            <ChevronLeftIcon className="h-6 w-6 text-gray-300" />
+          </button>
+          <h2 className="text-2xl font-bold text-gray-100">
+            {view === 'week'
+              ? `${format(startOfWeek(currentDate), dateFormat)} to ${format(
+                  endOfWeek(currentDate),
+                  'MMMM d, yyyy',
+                )}`
+              : format(currentDate, dateFormat)}
+          </h2>
+          <button
+            onClick={() => changeDate(1)}
+            className="p-2 rounded-full hover:bg-slate-700 transition-colors"
+          >
+            <ChevronRightIcon className="h-6 w-6 text-gray-300" />
+          </button>
+        </div>
+      )
+    }, [currentDate, view])
+
+    const changeDate = useCallback(
+      (amount: number) => {
+        if (view === 'month') {
+          setCurrentDate((prevDate) =>
+            amount > 0 ? addMonths(prevDate, 1) : subMonths(prevDate, 1),
+          )
+        } else if (view === 'week') {
+          setCurrentDate((prevDate) => addDays(prevDate, amount * 7))
+        } else if (view === 'day') {
+          setCurrentDate((prevDate) => addDays(prevDate, amount))
+        }
+      },
+      [view],
+    )
+
+    const renderDays = useCallback(() => {
+      const dateFormat = 'EEEE'
+      const days = []
+      let startDate = startOfWeek(currentDate)
+
+      for (let i = 0; i < 7; i++) {
+        days.push(
+          <div className="text-center font-semibold text-gray-400" key={i}>
+            {format(addDays(startDate, i), dateFormat)}
+          </div>,
+        )
+      }
+      return <div className="grid grid-cols-7 mb-2">{days}</div>
+    }, [currentDate])
+
+    const renderCells = useCallback(() => {
+      const monthStart = startOfMonth(currentDate)
+      const monthEnd = endOfMonth(monthStart)
+      const startDate = startOfWeek(monthStart)
+      const endDate = endOfWeek(monthEnd)
+
+      const rows = []
+      let days = []
+      let day = startDate
+
+      while (day <= endDate) {
+        for (let i = 0; i < 7; i++) {
+          const cloneDay = day
+          const isCurrentMonth = isSameMonth(day, monthStart)
+          days.push(
+            <DroppableCell
+              key={day.toString()}
+              day={cloneDay}
+              events={events}
+              onEventClick={onEventClick}
+              onDateClick={onDateClick}
+              onEventDrop={onEventDrop}
+              isCurrentMonth={isCurrentMonth}
+              isSelected={isSameDay(day, selectedDate)}
+            />,
+          )
+          day = addDays(day, 1)
+        }
+        rows.push(
+          <div className="grid grid-cols-7" key={day.toString()}>
+            {days}
+          </div>,
+        )
+        days = []
+      }
+      return <div className="mt-2">{rows}</div>
+    }, [
+      currentDate,
+      events,
+      selectedDate,
+      onEventClick,
+      onDateClick,
+      onEventDrop,
+    ])
+
+    const renderWeekView = useCallback(() => {
+      const startDate = startOfWeek(currentDate)
+      const endDate = endOfWeek(currentDate)
+      const days = eachDayOfInterval({ start: startDate, end: endDate })
+
+      return (
+        <div className="grid grid-cols-8 gap-2">
+          <div className="col-span-1"></div>
+          {days.map((day) => (
+            <div
+              key={day.toString()}
+              className="text-center font-semibold text-gray-300"
+            >
+              {format(day, 'EEE d/M')}
+            </div>
+          ))}
+          {eachHourOfInterval({
+            start: startOfDay(startDate),
+            end: endOfDay(startDate),
+          }).map((hour) => (
+            <React.Fragment key={hour.toString()}>
+              <div className="text-right pr-2 font-medium text-gray-400">
+                {format(hour, 'HH:mm')}
+              </div>
+              {days.map((day) => {
+                const currentHour = addDays(hour, getDay(day))
+                return (
+                  <div
+                    key={currentHour.toString()}
+                    className="border border-slate-700 h-12 relative"
+                    onClick={() => onDateClick(currentHour)}
+                  >
+                    {events
+                      .filter(
+                        (event) =>
+                          parseISO(event.start) <= currentHour &&
+                          parseISO(event.end) > currentHour &&
+                          isSameDay(parseISO(event.start), day),
+                      )
+                      .map((event, index) => (
+                        <div
+                          key={index}
+                          className={`absolute inset-0 ${event.color} opacity-75 text-white text-xs p-1 overflow-hidden`}
+                          onClick={(e) => {
+                            e.stopPropagation()
+                            onEventClick(event)
+                          }}
+                        >
+                          {event.title}
+                        </div>
+                      ))}
+                  </div>
+                )
+              })}
+            </React.Fragment>
+          ))}
+        </div>
+      )
+    }, [currentDate, events, onDateClick, onEventClick])
+
+    const renderDayView = useCallback(() => {
+      const hours = eachHourOfInterval({
+        start: startOfDay(currentDate),
+        end: endOfDay(currentDate),
+      })
+
+      return (
+        <div className="grid grid-cols-1 gap-2">
+          {hours.map((hour) => (
+            <div key={hour.toString()} className="flex">
+              <div className="w-20 text-right pr-2 font-medium text-gray-400">
+                {format(hour, 'HH:mm')}
+              </div>
+              <div
+                className="flex-grow border border-slate-700 h-12 relative"
+                onClick={() => onDateClick(hour)}
+              >
+                {events
+                  .filter(
+                    (event) =>
+                      parseISO(event.start) <= hour &&
+                      parseISO(event.end) > hour &&
+                      isSameDay(parseISO(event.start), currentDate),
+                  )
+                  .map((event, index) => (
+                    <div
+                      key={index}
+                      className={`absolute inset-0 ${event.color} opacity-75 text-white text-xs p-1 overflow-hidden`}
+                      onClick={(e) => {
+                        e.stopPropagation()
+                        onEventClick(event)
+                      }}
+                    >
+                      {event.title}
+                    </div>
+                  ))}
+              </div>
+            </div>
+          ))}
+        </div>
+      )
+    }, [currentDate, events, onDateClick, onEventClick])
+
+    const calendarContent = useMemo(() => {
+      switch (view) {
+        case 'month':
+          return (
+            <>
+              {renderDays()}
+              {renderCells()}
+            </>
+          )
+        case 'week':
+          return renderWeekView()
+        case 'day':
+          return renderDayView()
+        default:
+          return null
+      }
+    }, [view, renderDays, renderCells, renderWeekView, renderDayView])
+
+    if (loading) {
+      return <div>Loading events...</div>
+    }
+
+    if (error) {
+      return <div>Error: {error}</div>
+    }
+
+    return (
+      <DndProvider backend={HTML5Backend}>
+        <div className="container mx-auto p-4 bg-slate-900 min-h-screen text-gray-100">
+          <div className="bg-slate-800 shadow-lg rounded-lg overflow-hidden">
+            <div className="p-4">
+              <h1 className="text-3xl font-bold text-gray-100 mb-4">
+                Calendar
+              </h1>
+              <div className="flex space-x-2 mb-4">
+                <button
+                  onClick={() => setView('month')}
+                  className={`px-4 py-2 rounded ${
+                    view === 'month'
+                      ? 'bg-blue-600 text-white'
+                      : 'bg-slate-700 text-gray-300'
+                  }`}
+                >
+                  Month
+                </button>
+                <button
+                  onClick={() => setView('week')}
+                  className={`px-4 py-2 rounded ${
+                    view === 'week'
+                      ? 'bg-blue-600 text-white'
+                      : 'bg-slate-700 text-gray-300'
+                  }`}
+                >
+                  Week
+                </button>
+                <button
+                  onClick={() => setView('day')}
+                  className={`px-4 py-2 rounded ${
+                    view === 'day'
+                      ? 'bg-blue-600 text-white'
+                      : 'bg-slate-700 text-gray-300'
+                  }`}
+                >
+                  Day
+                </button>
+              </div>
+              {renderHeader()}
+              {calendarContent}
+            </div>
+          </div>
+
+          {isEventModalOpen && (
+            <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
+              <div className="bg-slate-800 p-6 rounded-lg w-full max-w-md">
+                <h3 className="text-xl font-semibold mb-4 text-gray-100">
+                  {isEditMode ? 'Edit Event' : 'Add New Event'}
+                </h3>
+                <input
+                  type="text"
+                  placeholder="Event Title"
+                  className="w-full p-2 mb-4 border rounded bg-slate-700 text-gray-100 border-slate-600"
+                  value={currentEvent.title}
+                  onChange={(e) =>
+                    setCurrentEvent({ ...currentEvent, title: e.target.value })
+                  }
+                />
+                <input
+                  type="datetime-local"
+                  className="w-full p-2 mb-4 border rounded bg-slate-700 text-gray-100 border-slate-600"
+                  value={currentEvent.start}
+                  onChange={(e) =>
+                    setCurrentEvent({ ...currentEvent, start: e.target.value })
+                  }
+                />
+                <input
+                  type="datetime-local"
+                  className="w-full p-2 mb-4 border rounded bg-slate-700 text-gray-100 border-slate-600"
+                  value={currentEvent.end}
+                  onChange={(e) =>
+                    setCurrentEvent({ ...currentEvent, end: e.target.value })
+                  }
+                />
+                <div className="mb-4">
+                  <label className="block text-sm font-medium text-gray-300 mb-2">
+                    Event Color
+                  </label>
+                  <div className="flex space-x-2">
+                    {colorOptions.map((color) => (
+                      <button
+                        key={color}
+                        className={`w-6 h-6 rounded-full ${color} ${
+                          currentEvent.color === color
+                            ? 'ring-2 ring-offset-2 ring-gray-400'
+                            : ''
+                        }`}
+                        onClick={() =>
+                          setCurrentEvent({ ...currentEvent, color })
+                        }
+                      />
+                    ))}
+                  </div>
+                </div>
+                <div className="flex justify-end space-x-2">
+                  <button
+                    className="px-4 py-2 bg-slate-700 text-gray-300 rounded"
+                    onClick={() => setIsEventModalOpen(false)}
+                  >
+                    Cancel
+                  </button>
+                  {isEditMode && (
+                    <button
+                      className="px-4 py-2 bg-red-600 text-white rounded"
+                      onClick={handleDeleteEvent}
+                    >
+                      Delete
+                    </button>
+                  )}
+                  <button
+                    className="px-4 py-2 bg-blue-600 text-white rounded"
+                    onClick={handleEventAction}
+                  >
+                    {isEditMode ? 'Update' : 'Add'} Event
+                  </button>
+                </div>
+              </div>
+            </div>
+          )}
+
+          <button
+            className="fixed bottom-4 right-4 bg-blue-600 text-white p-4 rounded-full shadow-lg hover:bg-blue-700 transition-colors"
+            onClick={() => onDateClick(new Date())}
+          >
+            <PlusIcon className="h-6 w-6" />
+          </button>
+        </div>
+      </DndProvider>
+    )
+  },
+)
+
+Calendar.displayName = 'Calendar'
+
+export default Calendar
+
+
+
+파일 경로: ./src/components/Calendar/calendar3.tsx
+----------------------------------------
+'use client'
+
+import React, { useState, useEffect } from 'react'
+import {
+  format,
+  startOfWeek,
+  endOfWeek,
+  startOfDay,
+  endOfDay,
+  addDays,
+  startOfMonth,
+  endOfMonth,
+  isSameMonth,
+  isSameDay,
+  addMonths,
+  subMonths,
+  parseISO,
+  eachDayOfInterval,
+  eachHourOfInterval,
+} from 'date-fns'
+import {
+  ChevronLeftIcon,
+  ChevronRightIcon,
+  PlusIcon,
+} from '@heroicons/react/24/solid'
+
+interface Event {
+  id: string
+  title: string
+  start: string
+  end: string
+  color: string
+}
+
+const colorOptions = [
+  'bg-red-500',
+  'bg-blue-500',
+  'bg-green-500',
+  'bg-yellow-500',
+  'bg-purple-500',
+  'bg-pink-500',
+]
+
+const Calendar: React.FC = () => {
+  const [currentDate, setCurrentDate] = useState<Date>(new Date())
+  const [selectedDate, setSelectedDate] = useState<Date>(new Date())
+  const [view, setView] = useState<'month' | 'week' | 'day'>('month')
+  const [events, setEvents] = useState<Event[]>([])
+  const [isAddEventOpen, setIsAddEventOpen] = useState<boolean>(false)
+  const [newEvent, setNewEvent] = useState<Event>({
+    id: '',
+    title: '',
+    start: '',
+    end: '',
+    color: colorOptions[0],
+  })
+
+  useEffect(() => {
+    const savedEvents = localStorage.getItem('events')
+    if (savedEvents) {
+      setEvents(JSON.parse(savedEvents))
+    }
+  }, [])
+
+  useEffect(() => {
+    localStorage.setItem('events', JSON.stringify(events))
+  }, [events])
+
+  const onDateClick = (day: Date) => {
+    setSelectedDate(day)
+    setNewEvent({
+      ...newEvent,
+      start: format(day, "yyyy-MM-dd'T'HH:mm"),
+      end: format(addDays(day, 1), "yyyy-MM-dd'T'HH:mm"),
+    })
+    setIsAddEventOpen(true)
+  }
+
+  const renderHeader = () => {
+    let dateFormat = 'MMMM yyyy'
+    if (view === 'week') dateFormat = "MMMM d, yyyy 'to' MMMM d, yyyy"
+    if (view === 'day') dateFormat = 'MMMM d, yyyy'
+
+    return (
+      <div className="flex justify-between items-center mb-4">
+        <button
+          onClick={() => changeDate(-1)}
+          className="p-2 rounded-full hover:bg-slate-700 transition-colors"
+        >
+          <ChevronLeftIcon className="h-6 w-6 text-gray-300" />
+        </button>
+        <h2 className="text-2xl font-bold text-gray-100">
+          {view === 'week'
+            ? `${format(startOfWeek(currentDate), dateFormat)} to ${format(
+              endOfWeek(currentDate),
+              'MMMM d, yyyy',
+            )}`
+            : format(currentDate, dateFormat)}
+        </h2>
+        <button
+          onClick={() => changeDate(1)}
+          className="p-2 rounded-full hover:bg-slate-700 transition-colors"
+        >
+          <ChevronRightIcon className="h-6 w-6 text-gray-300" />
+        </button>
+      </div>
+    )
+  }
+
+  const changeDate = (amount: number) => {
+    if (view === 'month') {
+      setCurrentDate((prevDate) =>
+        amount > 0 ? addMonths(prevDate, 1) : subMonths(prevDate, 1),
+      )
+    } else if (view === 'week') {
+      setCurrentDate((prevDate) => addDays(prevDate, amount * 7))
+    } else if (view === 'day') {
+      setCurrentDate((prevDate) => addDays(prevDate, amount))
+    }
+  }
+
+  const renderDays = () => {
+    const dateFormat = 'EEEE'
+    const days = []
+    let startDate = startOfWeek(currentDate)
+
+    for (let i = 0; i < 7; i++) {
+      days.push(
+        <div className="text-center font-semibold text-gray-400" key={i}>
+          {format(addDays(startDate, i), dateFormat)}
+        </div>,
+      )
+    }
+    return <div className="grid grid-cols-7 mb-2">{days}</div>
+  }
+
+  const renderCells = () => {
+    const monthStart = startOfMonth(currentDate)
+    const monthEnd = endOfMonth(monthStart)
+    const startDate = startOfWeek(monthStart)
+    const endDate = endOfWeek(monthEnd)
+
+    const dateFormat = 'd'
+    const rows = []
+    let days = []
+    let day = startDate
+    let formattedDate = ''
+
+    while (day <= endDate) {
+      for (let i = 0; i < 7; i++) {
+        formattedDate = format(day, dateFormat)
+        const cloneDay = day
+        days.push(
+          <div
+            className={`min-h-[100px] p-2 border border-slate-700 ${
+              !isSameMonth(day, monthStart)
+                ? 'bg-slate-800 text-gray-500'
+                : isSameDay(day, selectedDate)
+                  ? 'bg-slate-600'
+                  : ''
+            } hover:bg-slate-700 transition-colors cursor-pointer`}
+            key={day.toString()}
+            onClick={() => onDateClick(cloneDay)}
+          >
+            <span className="text-sm font-medium text-gray-300">
+              {formattedDate}
+            </span>
+            <div className="mt-1 space-y-1">
+              {events
+                .filter((event) => isSameDay(parseISO(event.start), day))
+                .map((event, index) => (
+                  <div
+                    key={index}
+                    className={`text-xs text-white p-1 rounded truncate ${event.color}`}
+                  >
+                    {event.title}
+                  </div>
+                ))}
+            </div>
+          </div>,
+        )
+        day = addDays(day, 1)
+      }
+      rows.push(
+        <div className="grid grid-cols-7" key={day.toString()}>
+          {days}
+        </div>,
+      )
+      days = []
+    }
+    return <div className="mt-2">{rows}</div>
+  }
+
+  const renderWeekView = () => {
+    const startDate = startOfWeek(currentDate)
+    const endDate = endOfWeek(currentDate)
+    const days = eachDayOfInterval({ start: startDate, end: endDate })
+
+    return (
+      <div className="grid grid-cols-8 gap-2">
+        <div className="col-span-1"></div>
+        {days.map((day) => (
+          <div
+            key={day.toString()}
+            className="text-center font-semibold text-gray-300"
+          >
+            {format(day, 'EEE d/M')}
+          </div>
+        ))}
+        {eachHourOfInterval({
+          start: startOfDay(startDate),
+          end: endOfDay(startDate),
+        }).map((hour) => (
+          <React.Fragment key={hour.toString()}>
+            <div className="text-right pr-2 font-medium text-gray-400">
+              {format(hour, 'HH:mm')}
+            </div>
+            {days.map((day) => {
+              const currentHour = addDays(hour, day.getDay())
+              return (
+                <div
+                  key={currentHour.toString()}
+                  className="border border-slate-700 h-12 relative"
+                  onClick={() => onDateClick(currentHour)}
+                >
+                  {events
+                    .filter(
+                      (event) =>
+                        parseISO(event.start) <= currentHour &&
+                        parseISO(event.end) > currentHour,
+                    )
+                    .map((event, index) => (
+                      <div
+                        key={index}
+                        className={`absolute inset-0 ${event.color} opacity-75 text-white text-xs p-1 overflow-hidden`}
+                      >
+                        {event.title}
+                      </div>
+                    ))}
+                </div>
+              )
+            })}
+          </React.Fragment>
+        ))}
+      </div>
+    )
+  }
+
+  const renderDayView = () => {
+    const hours = eachHourOfInterval({
+      start: startOfDay(currentDate),
+      end: endOfDay(currentDate),
+    })
+
+    return (
+      <div className="grid grid-cols-1 gap-2">
+        {hours.map((hour) => (
+          <div key={hour.toString()} className="flex">
+            <div className="w-20 text-right pr-2 font-medium text-gray-400">
+              {format(hour, 'HH:mm')}
+            </div>
+            <div
+              className="flex-grow border border-slate-700 h-12 relative"
+              onClick={() => onDateClick(hour)}
+            >
+              {events
+                .filter(
+                  (event) =>
+                    parseISO(event.start) <= hour &&
+                    parseISO(event.end) > hour &&
+                    isSameDay(parseISO(event.start), currentDate),
+                )
+                .map((event, index) => (
+                  <div
+                    key={index}
+                    className={`absolute inset-0 ${event.color} opacity-75 text-white text-xs p-1 overflow-hidden`}
+                  >
+                    {event.title}
+                  </div>
+                ))}
+            </div>
+          </div>
+        ))}
+      </div>
+    )
+  }
+
+  const handleAddEvent = () => {
+    if (newEvent.title && newEvent.start && newEvent.end) {
+      setEvents([...events, { ...newEvent, id: Date.now().toString() }])
+      setNewEvent({
+        id: '',
+        title: '',
+        start: '',
+        end: '',
+        color: colorOptions[0],
+      })
+      setIsAddEventOpen(false)
+    }
+  }
+
+  return (
+    <div className="container mx-auto p-4 bg-slate-900 min-h-screen text-gray-100">
+      <div className="bg-slate-800 shadow-lg rounded-lg overflow-hidden">
+        <div className="p-4">
+          <h1 className="text-3xl font-bold text-gray-100 mb-4">
+            Calendar
+          </h1>
+          <div className="flex space-x-2 mb-4">
+            <button
+              onClick={() => setView('month')}
+              className={`px-4 py-2 rounded ${
+                view === 'month'
+                  ? 'bg-blue-600 text-white'
+                  : 'bg-slate-700 text-gray-300'
+              }`}
+            >
+              Month
+            </button>
+            <button
+              onClick={() => setView('week')}
+              className={`px-4 py-2 rounded ${
+                view === 'week'
+                  ? 'bg-blue-600 text-white'
+                  : 'bg-slate-700 text-gray-300'
+              }`}
+            >
+              Week
+            </button>
+            <button
+              onClick={() => setView('day')}
+              className={`px-4 py-2 rounded ${
+                view === 'day'
+                  ? 'bg-blue-600 text-white'
+                  : 'bg-slate-700 text-gray-300'
+              }`}
+            >
+              Day
+            </button>
+          </div>
+          {renderHeader()}
+          {view === 'month' && (
+            <>
+              {renderDays()}
+              {renderCells()}
+            </>
+          )}
+          {view === 'week' && renderWeekView()}
+          {view === 'day' && renderDayView()}
+        </div>
+      </div>
+
+      {isAddEventOpen && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
+          <div className="bg-slate-800 p-6 rounded-lg w-full max-w-md">
+            <h3 className="text-xl font-semibold mb-4 text-gray-100">
+              Add New Event
+            </h3>
+            <input
+              type="text"
+              placeholder="Event Title"
+              className="w-full p-2 mb-4 border rounded bg-slate-700 text-gray-100 border-slate-600"
+              value={newEvent.title}
+              onChange={(e) =>
+                setNewEvent({ ...newEvent, title: e.target.value })
+              }
+            />
+            <input
+              type="datetime-local"
+              className="w-full p-2 mb-4 border rounded bg-slate-700 text-gray-100 border-slate-600"
+              value={newEvent.start}
+              onChange={(e) =>
+                setNewEvent({ ...newEvent, start: e.target.value })
+              }
+            />
+            <input
+              type="datetime-local"
+              className="w-full p-2 mb-4 border rounded bg-slate-700 text-gray-100 border-slate-600"
+              value={newEvent.end}
+              onChange={(e) =>
+                setNewEvent({ ...newEvent, end: e.target.value })
+              }
+            />
+            <div className="mb-4">
+              <label className="block text-sm font-medium text-gray-300 mb-2">
+                Event Color
+              </label>
+              <div className="flex space-x-2">
+                {colorOptions.map((color) => (
+                  <button
+                    key={color}
+                    className={`w-6 h-6 rounded-full ${color} ${
+                      newEvent.color === color
+                        ? 'ring-2 ring-offset-2 ring-gray-400'
+                        : ''
+                    }`}
+                    onClick={() => setNewEvent({ ...newEvent, color })}
+                  />
+                ))}
+              </div>
+            </div>
+            <div className="flex justify-end space-x-2">
+              <button
+                className="px-4 py-2 bg-slate-700 text-gray-300 rounded"
+                onClick={() => setIsAddEventOpen(false)}
+              >
+                Cancel
+              </button>
+              <button
+                className="px-4 py-2 bg-blue-600 text-white rounded"
+                onClick={handleAddEvent}
+              >
+                Add Event
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      <button
+        className="fixed bottom-4 right-4 bg-blue-600 text-white p-4 rounded-full shadow-lg hover:bg-blue-700 transition-colors"
+        onClick={() => onDateClick(new Date())}
+      >
+        <PlusIcon className="h-6 w-6" />
+      </button>
+    </div>
+  )
+}
+
+export default Calendar
+
+
+
+파일 경로: ./src/components/Calendar/calendar2.tsx
+----------------------------------------
+'use client'
+
+import React, { useState, useEffect } from 'react'
+import {
+  format,
+  startOfWeek,
+  endOfWeek,
+  startOfDay,
+  endOfDay,
+  addDays,
+  startOfMonth,
+  endOfMonth,
+  isSameMonth,
+  isSameDay,
+  addMonths,
+  subMonths,
+  parseISO,
+  eachDayOfInterval,
+  eachHourOfInterval,
+} from 'date-fns'
+import {
+  ChevronLeftIcon,
+  ChevronRightIcon,
+  PlusIcon,
+} from '@heroicons/react/24/solid'
+import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd'
+
+interface Event {
+  id: string
+  title: string
+  start: string
+  end: string
+  color: string
+}
+
+const colorOptions = [
+  'bg-red-500',
+  'bg-blue-500',
+  'bg-green-500',
+  'bg-yellow-500',
+  'bg-purple-500',
+  'bg-pink-500',
+]
+
+const Calendar: React.FC = () => {
+  const [currentDate, setCurrentDate] = useState<Date>(new Date())
+  const [selectedDate, setSelectedDate] = useState<Date>(new Date())
+  const [view, setView] = useState<'month' | 'week' | 'day'>('month')
+  const [events, setEvents] = useState<Event[]>([])
+  const [isAddEventOpen, setIsAddEventOpen] = useState<boolean>(false)
+  const [isEditing, setIsEditing] = useState<boolean>(false) // 수정 모드 여부를 확인하기 위한 상태
+  const [editingEventId, setEditingEventId] = useState<string | null>(null) // 수정 중인 이벤트의 ID 저장
+  const [newEvent, setNewEvent] = useState<Event>({
+    id: '',
+    title: '',
+    start: '',
+    end: '',
+    color: colorOptions[0],
+  })
+
+  useEffect(() => {
+    const savedEvents = localStorage.getItem('events')
+    if (savedEvents) {
+      setEvents(JSON.parse(savedEvents))
+    }
+  }, [])
+
+  useEffect(() => {
+    localStorage.setItem('events', JSON.stringify(events))
+  }, [events])
+
+  const onDateClick = (day: Date) => {
+    setSelectedDate(day)
+    setNewEvent({
+      ...newEvent,
+      start: format(day, "yyyy-MM-dd'T'HH:mm"),
+      end: format(addDays(day, 1), "yyyy-MM-dd'T'HH:mm"),
+    })
+    setIsAddEventOpen(true)
+    setIsEditing(false) // 새 이벤트 추가시 수정 모드가 아니도록 설정
+  }
+
+  const onEventClick = (event: Event) => {
+    setEditingEventId(event.id) // 수정할 이벤트의 ID 설정
+    setNewEvent({
+      ...event,
+    })
+    setIsAddEventOpen(true)
+    setIsEditing(true)
+  }
+
+  const renderHeader = () => {
+    let dateFormat = 'MMMM yyyy'
+    if (view === 'week') dateFormat = "MMMM d, yyyy 'to' MMMM d, yyyy"
+    if (view === 'day') dateFormat = 'MMMM d, yyyy'
+
+    return (
+      <div className="flex justify-between items-center mb-4">
+        <button
+          onClick={() => changeDate(-1)}
+          className="p-2 rounded-full hover:bg-slate-700 transition-colors"
+        >
+          <ChevronLeftIcon className="h-6 w-6 text-gray-300" />
+        </button>
+        <h2 className="text-2xl font-bold text-gray-100">
+          {view === 'week'
+            ? `${format(startOfWeek(currentDate), dateFormat)} to ${format(
+                endOfWeek(currentDate),
+                'MMMM d, yyyy',
+              )}`
+            : format(currentDate, dateFormat)}
+        </h2>
+        <button
+          onClick={() => changeDate(1)}
+          className="p-2 rounded-full hover:bg-slate-700 transition-colors"
+        >
+          <ChevronRightIcon className="h-6 w-6 text-gray-300" />
+        </button>
+      </div>
+    )
+  }
+
+  const changeDate = (amount: number) => {
+    if (view === 'month') {
+      setCurrentDate((prevDate) =>
+        amount > 0 ? addMonths(prevDate, 1) : subMonths(prevDate, 1),
+      )
+    } else if (view === 'week') {
+      setCurrentDate((prevDate) => addDays(prevDate, amount * 7))
+    } else if (view === 'day') {
+      setCurrentDate((prevDate) => addDays(prevDate, amount))
+    }
+  }
+
+  const renderDays = () => {
+    const dateFormat = 'EEEE'
+    const days = []
+    let startDate = startOfWeek(currentDate)
+
+    for (let i = 0; i < 7; i++) {
+      days.push(
+        <div className="text-center font-semibold text-gray-400" key={i}>
+          {format(addDays(startDate, i), dateFormat)}
+        </div>,
+      )
+    }
+    return <div className="grid grid-cols-7 mb-2">{days}</div>
+  }
+
+  const renderCells = () => {
+    const monthStart = startOfMonth(currentDate)
+    const monthEnd = endOfMonth(monthStart)
+    const startDate = startOfWeek(monthStart)
+    const endDate = endOfWeek(monthEnd)
+
+    const dateFormat = 'd'
+    const rows = []
+    let days = []
+    let day = startDate
+    let formattedDate = ''
+
+    while (day <= endDate) {
+      for (let i = 0; i < 7; i++) {
+        formattedDate = format(day, dateFormat)
+        const cloneDay = day
+        days.push(
+          <Droppable droppableId={cloneDay.toString()} key={day.toString()}>
+            {(provided) => (
+              <div
+                className={`min-h-[100px] p-2 border border-slate-700 ${
+                  !isSameMonth(day, monthStart)
+                    ? 'bg-slate-800 text-gray-500'
+                    : isSameDay(day, selectedDate)
+                    ? 'bg-slate-600'
+                    : ''
+                } hover:bg-slate-700 transition-colors cursor-pointer`}
+                onClick={() => onDateClick(cloneDay)}
+                ref={provided.innerRef}
+                {...provided.droppableProps}
+              >
+                <span className="text-sm font-medium text-gray-300">
+                  {formattedDate}
+                </span>
+                <div className="mt-1 space-y-1">
+                  {events
+                    .filter((event) => isSameDay(parseISO(event.start), day))
+                    .map((event, index) => (
+                      <Draggable
+                        key={event.id}
+                        draggableId={event.id}
+                        index={index}
+                      >
+                        {(provided) => (
+                          <div
+                            className={`text-xs text-white p-1 rounded truncate ${event.color} cursor-pointer`}
+                            onClick={(e) => {
+                              e.stopPropagation()
+                              onEventClick(event)
+                            }}
+                            ref={provided.innerRef}
+                            {...provided.draggableProps}
+                            {...provided.dragHandleProps}
+                          >
+                            {event.title}
+                          </div>
+                        )}
+                      </Draggable>
+                    ))}
+                  {provided.placeholder}
+                </div>
+              </div>
+            )}
+          </Droppable>,
+        )
+        day = addDays(day, 1)
+      }
+      rows.push(
+        <div className="grid grid-cols-7" key={day.toString()}>
+          {days}
+        </div>,
+      )
+      days = []
+    }
+    return <div className="mt-2">{rows}</div>
+  }
+
+  const renderWeekView = () => {
+    const startDate = startOfWeek(currentDate)
+    const endDate = endOfWeek(currentDate)
+    const days = eachDayOfInterval({ start: startDate, end: endDate })
+
+    return (
+      <div className="grid grid-cols-8 gap-2">
+        <div className="col-span-1"></div>
+        {days.map((day) => (
+          <div
+            key={day.toString()}
+            className="text-center font-semibold text-gray-300"
+          >
+            {format(day, 'EEE d/M')}
+          </div>
+        ))}
+        {eachHourOfInterval({
+          start: startOfDay(startDate),
+          end: endOfDay(startDate),
+        }).map((hour) => (
+          <React.Fragment key={hour.toString()}>
+            <div className="text-right font-medium text-gray-400 pr-2 border-b border-slate-700 py-2">
+              {format(hour, 'HH:mm')}
+            </div>
+            {days.map((day) => {
+              const currentHour = addDays(
+                hour,
+                day.getDay() - startDate.getDay(),
+              )
+              return (
+                <div
+                  key={day.toString() + hour.toString()}
+                  className="relative border-b border-slate-700 h-12"
+                  onClick={() => onDateClick(currentHour)}
+                >
+                  {events
+                    .filter(
+                      (event) =>
+                        parseISO(event.start) <= currentHour &&
+                        parseISO(event.end) > currentHour,
+                    )
+                    .map((event) => (
+                      <Draggable
+                        key={event.id}
+                        draggableId={event.id}
+                        index={parseInt(event.id)}
+                      >
+                        {(provided) => (
+                          <div
+                            className={`absolute inset-0 m-0.5 text-xs text-white p-1 rounded ${event.color} cursor-pointer`}
+                            onClick={(e) => {
+                              e.stopPropagation()
+                              onEventClick(event)
+                            }}
+                            ref={provided.innerRef}
+                            {...provided.draggableProps}
+                            {...provided.dragHandleProps}
+                          >
+                            {event.title}
+                          </div>
+                        )}
+                      </Draggable>
+                    ))}
+                </div>
+              )
+            })}
+          </React.Fragment>
+        ))}
+      </div>
+    )
+  }
+
+  const renderDayView = () => {
+    const startDate = startOfDay(currentDate)
+    const endDate = endOfDay(currentDate)
+    const hours = eachHourOfInterval({ start: startDate, end: endDate })
+
+    return (
+      <div>
+        {hours.map((hour) => (
+          <div
+            key={hour.toString()}
+            className="flex items-center space-x-2 py-2 border-b border-slate-700"
+            onClick={() => onDateClick(hour)}
+          >
+            <div className="w-16 text-right pr-2 font-medium text-gray-400">
+              {format(hour, 'HH:mm')}
+            </div>
+            <div className="flex-1 relative h-12">
+              {events
+                .filter(
+                  (event) =>
+                    parseISO(event.start) <= hour && parseISO(event.end) > hour,
+                )
+                .map((event) => (
+                  <Draggable
+                    key={event.id}
+                    draggableId={event.id}
+                    index={parseInt(event.id)}
+                  >
+                    {(provided) => (
+                      <div
+                        className={`absolute inset-0 m-0.5 text-xs text-white p-1 rounded ${event.color} cursor-pointer`}
+                        onClick={(e) => {
+                          e.stopPropagation()
+                          onEventClick(event)
+                        }}
+                        ref={provided.innerRef}
+                        {...provided.draggableProps}
+                        {...provided.dragHandleProps}
+                      >
+                        {event.title}
+                      </div>
+                    )}
+                  </Draggable>
+                ))}
+            </div>
+          </div>
+        ))}
+      </div>
+    )
+  }
+
+  const handleEventChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>,
+  ) => {
+    setNewEvent({ ...newEvent, [e.target.name]: e.target.value })
+  }
+
+  const handleEventSubmit = (e: React.FormEvent) => {
+    e.preventDefault()
+    if (isEditing && editingEventId) {
+      // 수정 모드일 때 이벤트 업데이트
+      setEvents((prevEvents) =>
+        prevEvents.map((event) =>
+          event.id === editingEventId
+            ? { ...newEvent, id: editingEventId }
+            : event,
+        ),
+      )
+      setIsEditing(false)
+      setEditingEventId(null)
+    } else {
+      // 새로운 이벤트 추가
+      setEvents([...events, { ...newEvent, id: Date.now().toString() }])
+    }
+    setIsAddEventOpen(false)
+    setNewEvent({
+      id: '',
+      title: '',
+      start: '',
+      end: '',
+      color: colorOptions[0],
+    })
+  }
+
+  const onDragEnd = (result: any) => {
+    const { source, destination, draggableId } = result
+
+    if (!destination) return
+
+    const updatedEvents = events.map((event) => {
+      if (event.id === draggableId) {
+        const newStart = new Date(destination.droppableId)
+        const newEnd = addDays(newStart, 1)
+        return {
+          ...event,
+          start: newStart.toISOString(),
+          end: newEnd.toISOString(),
+        }
+      }
+      return event
+    })
+
+    setEvents(updatedEvents)
+  }
+
+  const renderAddEventModal = () => (
+    <div
+      className={`fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center ${
+        isAddEventOpen ? '' : 'hidden'
+      }`}
+    >
+      <div className="bg-white p-6 rounded shadow-lg max-w-md w-full">
+        <h2 className="text-xl font-bold mb-4">
+          {isEditing ? '이벤트 수정' : '이벤트 추가'}
+        </h2>
+        <form onSubmit={handleEventSubmit}>
+          <div className="mb-4">
+            <label className="block text-sm font-medium mb-1">제목</label>
+            <input
+              type="text"
+              name="title"
+              value={newEvent.title}
+              onChange={handleEventChange}
+              className="w-full border border-gray-300 rounded p-2"
+              required
+            />
+          </div>
+          <div className="mb-4">
+            <label className="block text-sm font-medium mb-1">시작 시간</label>
+            <input
+              type="datetime-local"
+              name="start"
+              value={newEvent.start}
+              onChange={handleEventChange}
+              className="w-full border border-gray-300 rounded p-2"
+              required
+            />
+          </div>
+          <div className="mb-4">
+            <label className="block text-sm font-medium mb-1">종료 시간</label>
+            <input
+              type="datetime-local"
+              name="end"
+              value={newEvent.end}
+              onChange={handleEventChange}
+              className="w-full border border-gray-300 rounded p-2"
+              required
+            />
+          </div>
+          <div className="mb-4">
+            <label className="block text-sm font-medium mb-1">색상</label>
+            <select
+              name="color"
+              value={newEvent.color}
+              onChange={handleEventChange}
+              className="w-full border border-gray-300 rounded p-2"
+            >
+              {colorOptions.map((color) => (
+                <option key={color} value={color}>
+                  {color}
+                </option>
+              ))}
+            </select>
+          </div>
+          <div className="flex justify-end">
+            <button
+              type="button"
+              onClick={() => setIsAddEventOpen(false)}
+              className="bg-gray-500 text-white px-4 py-2 rounded mr-2"
+            >
+              취소
+            </button>
+            <button
+              type="submit"
+              className="bg-blue-500 text-white px-4 py-2 rounded"
+            >
+              {isEditing ? '수정 완료' : '추가'}
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  )
+
+  return (
+    <div className="p-4">
+      <div className="flex justify-between mb-4">
+        {renderHeader()}
+        <button
+          onClick={() => {
+            setIsAddEventOpen(true)
+            setIsEditing(false) // 새로운 이벤트 추가 시 수정 모드 비활성화
+            setNewEvent({
+              id: '',
+              title: '',
+              start: '',
+              end: '',
+              color: colorOptions[0],
+            })
+          }}
+          className="flex items-center bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition-colors"
+        >
+          <PlusIcon className="h-5 w-5 mr-2" />
+          이벤트 추가
+        </button>
+      </div>
+      <div className="flex mb-4">
+        <button
+          onClick={() => setView('month')}
+          className={`flex-1 p-2 text-center ${
+            view === 'month' ? 'bg-slate-700 text-white' : 'text-gray-400'
+          } hover:bg-slate-600 transition-colors rounded-l`}
+        >
+          월
+        </button>
+        <button
+          onClick={() => setView('week')}
+          className={`flex-1 p-2 text-center ${
+            view === 'week' ? 'bg-slate-700 text-white' : 'text-gray-400'
+          } hover:bg-slate-600 transition-colors`}
+        >
+          주
+        </button>
+        <button
+          onClick={() => setView('day')}
+          className={`flex-1 p-2 text-center ${
+            view === 'day' ? 'bg-slate-700 text-white' : 'text-gray-400'
+          } hover:bg-slate-600 transition-colors rounded-r`}
+        >
+          일
+        </button>
+      </div>
+      <DragDropContext onDragEnd={onDragEnd}>
+        {view === 'month' && (
+          <>
+            {renderDays()}
+            {renderCells()}
+          </>
+        )}
+        {view === 'week' && renderWeekView()}
+        {view === 'day' && renderDayView()}
+      </DragDropContext>
+      {renderAddEventModal()}
+    </div>
+  )
+}
+
+export default Calendar
+
+
+
+파일 경로: ./src/components/errorModal/index.tsx
+----------------------------------------
+interface ErrorModalProps {
+  error: string
+  onClose: () => void
+}
+
+const ErrorModal = ({ error, onClose }: ErrorModalProps) => {
+  if (!error) return null
+
+  const handleOutsideClick = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (e.target === e.currentTarget) {
+      onClose()
+    }
+  }
+
+  return (
+    <div
+      className="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full z-50"
+      id="my-modal"
+      onClick={handleOutsideClick}
+    >
+      <div className="relative top-20 mx-auto p-5 border w-96 shadow-lg rounded-md bg-white z-51">
+        <div className="mt-3 text-center">
+          <div className="mx-auto flex items-center justify-center h-12 w-12 rounded-full bg-red-100">
+            <svg
+              className="h-6 w-6 text-red-600"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
+                d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"
+              />
+            </svg>
+          </div>
+          <h3 className="text-lg leading-6 font-medium text-gray-900">오류</h3>
+          <div className="mt-2 px-7 py-3">
+            <p className="text-sm text-gray-500">{error}</p>
+          </div>
+          <div className="items-center px-4 py-3">
+            <button
+              id="ok-btn"
+              className="px-4 py-2 bg-red-500 text-white text-base font-medium rounded-md w-full shadow-sm hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-300"
+              onClick={onClose}
+            >
+              확인
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  )
+}
+
+export default ErrorModal
+
+
+
+파일 경로: ./src/components/postLoading/index.tsx
+----------------------------------------
+import Skeleton from 'react-loading-skeleton'
+import 'react-loading-skeleton/dist/skeleton.css'
+
+const PostLoading = () => {
+  // toggle sidebar
+
+  return (
+    <div className="flex flex-col p-4 bg-gray-800 border border-gray-800 shadow-md hover:text-green-500 text-gray-400 hover:shodow-lg rounded-2xl transition ease-in duration-500  transform hover:scale-105 cursor-pointer">
+      <div className="flex items-center justify-between">
+        <div className="flex items-center mr-auto">
+          <div className="-space-x-5 flex ">
+            <Skeleton className="flex rounded-full" width={'25px'} />
+          </div>
+
+          <div className="flex flex-col ml-3 min-w-0">
+            <div className="font-medium leading-none text-gray-100">
+              <Skeleton width={'200px'} />
+            </div>
+            <p className="text-sm text-gray-500 leading-none mt-1 truncate">
+              <Skeleton width={'100px'} />
+            </p>
+          </div>
+        </div>
+        <div className="flex flex-col ml-3 min-w-0">
+          <Skeleton width={'10px'} />
+        </div>
+      </div>
+    </div>
+  )
+}
+
+export default PostLoading
+
+
+
+파일 경로: ./src/components/Posts/index.tsx
+----------------------------------------
+'use client'
+
+import Link from 'next/link'
+import { useEffect, useState } from 'react'
+import Post from '@/components/Post/post'
+import { useBoardApi, Post as PostType } from '@/lib/api'
+
+export default function Index() {
+  const [posts, setPosts] = useState<PostType[]>([])
+  const { fetchPosts, loading, error } = useBoardApi()
+
+  useEffect(() => {
+    const loadPosts = async () => {
+      try {
+        const fetchedPosts = await fetchPosts()
+        setPosts(fetchedPosts)
+      } catch (err) {
+        console.error('Error fetching posts:', err)
+      }
+    }
+
+    loadPosts()
+  }, [fetchPosts])
+
+  if (loading) return <div>Loading...</div>
+  if (error) return <div>Error: {error}</div>
+
+  return (
+    <>
+      <section className="pt-20">
+        <header className="bg-slate-800 space-y-4 p-4 rounded-t-2xl sm:px-8 sm:py-6 lg:p-4 xl:px-8 xl:py-6">
+          <div className="flex items-center justify-between">
+            <h1 className="text-white p-5">POST</h1>
+            <Link
+              href="/posts/write/New"
+              className="hover:bg-blue-400 group flex items-center rounded-md bg-blue-500 text-white text-sm font-medium pl-2 pr-3 py-2 shadow-sm"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="16"
+                height="16"
+                fill="currentColor"
+                className="bi bi-plus-square-fill"
+                viewBox="0 0 16 16"
+              >
+                <path d="M2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2zm6.5 4.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3a.5.5 0 0 1 1 0" />
+              </svg>
+              <span className="pl-1">add</span>
+            </Link>
+          </div>
+        </header>
+      </section>
+      <div className="bg-slate-700 p-4 rounded-b-2xl">
+        <blockquote className="m-8">
+          <div className="flex-auto items-center justify-center min-h-full">
+            {posts.length > 0 ? (
+              <div className="flex flex-col space-y-4">
+                {posts.map((post) => (
+                  <Post key={post.id} {...post} />
+                ))}
+              </div>
+            ) : (
+              <div>조회된 데이터가 없습니다.</div>
+            )}
+          </div>
+        </blockquote>
+      </div>
+    </>
+  )
+}
+
+
+
+파일 경로: ./src/lib/api.ts
+----------------------------------------
+import useApi from './useApi'
+
+// Event 인터페이스 (기존과 동일)
+export interface Event {
+  id: string
+  title: string
+  start: string
+  end: string
+  color: string
+}
+
+// 이벤트 관련 API 훅
+export const useEventApi = () => {
+  const api = useApi<Event>()
+
+  const fetchEvents = () => api.get('/events')
+  const createEvent = (event: Omit<Event, 'id'>) => api.post('/events', event)
+  const updateEvent = (event: Event) => api.put(`/events/${event.id}`, event)
+  const deleteEvent = (id: string) => api.del(`/events/${id}`)
+
+  return {
+    fetchEvents,
+    createEvent,
+    updateEvent,
+    deleteEvent,
+    loading: api.loading,
+    error: api.error,
+  }
+}
+
+// Post 인터페이스 추가 (필요에 따라 속성을 조정하세요)
+export interface Post {
+  id: string
+  title: string
+  content: string
+  createdAt: string
+  // 기타 필요한 속성들...
+}
+// 게시판 관련 API 훅
+export const useBoardApi = () => {
+  const api = useApi<Post>()
+
+  const fetchPosts = () => api.get<Post[]>('/posts', post)
+  const fetchPostById = (id: string) => api.get<Post>(`/post/${id}`)
+  const createPost = (post: Omit<Post, 'id'>) => api.post<Post>(`/post/`, post)
+
+  return {
+    fetchPosts,
+    fetchPostById,
+    createPost,
+    ...api,
+  }
+}
+
+export default {
+  useEventApi,
+  useBoardApi,
+}
+
+
+
+파일 경로: ./src/lib/useApi.ts
+----------------------------------------
+import { useState, useCallback } from 'react'
+import axiosInstance from './axiosInstance'
+
+interface ApiResponse<T> {
+  data: T | null
+  error: string | null
+  loading: boolean
+}
+
+const useApi = <T>() => {
+  const [state, setState] = useState<ApiResponse<T>>({
+    data: null,
+    error: null,
+    loading: false,
+  })
+
+  const request = useCallback(
+    async <R = T>(
+      method: 'get' | 'post' | 'put' | 'delete',
+      url: string,
+      data?: any,
+    ): Promise<R> => {
+      setState((prev) => ({ ...prev, loading: true }))
+      try {
+        const response = await axiosInstance<R>({ method, url, data })
+        setState({
+          data: response.data as unknown as T,
+          error: null,
+          loading: false,
+        })
+        return response.data
+      } catch (error: unknown) {
+        const errorMessage =
+          typeof error === 'object' &&
+          error !== null &&
+          'message' in error &&
+          typeof error.message === 'string'
+            ? error.message
+            : 'An error occurred'
+        setState({ data: null, error: errorMessage, loading: false })
+        throw error
+      }
+    },
+    [],
+  )
+
+  const get = useCallback(
+    <R = T>(url: string) => request<R>('get', url),
+    [request],
+  )
+  const post = useCallback(
+    <R = T>(url: string, data: any) => request<R>('post', url, data),
+    [request],
+  )
+  const put = useCallback(
+    <R = T>(url: string, data: any) => request<R>('put', url, data),
+    [request],
+  )
+  const del = useCallback(
+    <R = T>(url: string) => request<R>('delete', url),
+    [request],
+  )
+
+  return { ...state, get, post, put, del }
+}
+
+export default useApi
+
+
+
+파일 경로: ./src/lib/axiosInstance.ts
+----------------------------------------
+import axios, { AxiosInstance, AxiosError, AxiosResponse } from 'axios'
+
+const API_BASE_URL = 'http://localhost:8080/api'
+
+const axiosInstance: AxiosInstance = axios.create({
+  baseURL: API_BASE_URL,
+  headers: {
+    'Content-Type': 'application/json',
+  },
+})
+
+// Request interceptor
+axiosInstance.interceptors.request.use(
+  (config) => {
+    // You can add authentication token here
+    // const token = localStorage.getItem('token');
+    // if (token) {
+    //   config.headers['Authorization'] = `Bearer ${token}`;
+    // }
+    return config
+  },
+  (error) => {
+    return Promise.reject(error)
+  },
+)
+
+// Response interceptor
+axiosInstance.interceptors.response.use(
+  (response: AxiosResponse) => response,
+  (error: AxiosError) => {
+    if (error.response) {
+      // The request was made and the server responded with a status code
+      // that falls out of the range of 2xx
+      console.error('Error status:', error.response.status)
+      console.error('Error data:', error.response.data)
+    } else if (error.request) {
+      // The request was made but no response was received
+      console.error('Error request:', error.request)
+    } else {
+      // Something happened in setting up the request that triggered an Error
+      console.error('Error message:', error.message)
+    }
+    return Promise.reject(error)
+  },
+)
+
+export default axiosInstance
+
+
+
+파일 경로: ./src/styles/Calendar.module.css
+----------------------------------------
+
+
+
