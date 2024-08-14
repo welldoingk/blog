@@ -16,16 +16,17 @@ pipeline {
         
         stage('Build Frontend') {
             steps {
-                dir('frontend') {
-                    sh 'docker build -t frontend:${BUILD_NUMBER} -f ../front/Dockerfile .'
+                dir('front') {
+                    sh 'npm install'
+                    sh 'docker build -t frontend:${BUILD_NUMBER} -f Dockerfile .'
                 }
             }
         }
         
         stage('Build Backend') {
             steps {
-                dir('backend') {
-                    sh 'docker build -t backend:${BUILD_NUMBER} -f ../back/Dockerfile .'
+                dir('back') {
+                    sh 'docker build -t backend:${BUILD_NUMBER} -f Dockerfile .'
                 }
             }
         }
