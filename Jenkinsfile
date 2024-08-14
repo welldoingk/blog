@@ -1,6 +1,9 @@
 pipeline {
     agent any
         
+    tools {
+        nodejs "20.9.0"  // Global Tool Configuration에서 설정한 이름
+    }
     stages {
         stage('Clean Workspace') {
             steps {
