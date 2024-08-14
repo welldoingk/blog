@@ -5,11 +5,11 @@ pipeline {
         nodejs "20.9.0"  // Global Tool Configuration에서 설정한 이름
     }
     stages {
-        stage('Clean Workspace') {
-            steps {
-                cleanWs()
-            }
-        }
+        // stage('Clean Workspace') {
+        //     steps {
+        //         cleanWs()
+        //     }
+        // }
 
         stage('Checkout') {
             steps {
@@ -38,11 +38,11 @@ pipeline {
             steps {
                 sh 'docker stop frontend || true'
                 sh 'docker rm frontend || true'
-                sh 'docker run -d --name frontend -p 3000:3000 frontend:${BUILD_NUMBER}'
+                sh 'docker run -d --name frontend -p 8801:8801 frontend:${BUILD_NUMBER}'
                 
                 sh 'docker stop backend || true'
                 sh 'docker rm backend || true'
-                sh 'docker run -d --name backend -p 8080:8080 backend:${BUILD_NUMBER}'
+                sh 'docker run -d --name backend -p 8800:8800 backend:${BUILD_NUMBER}'
             }
         }
     }
