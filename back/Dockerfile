@@ -1,8 +1,25 @@
-FROM openjdk:17
-LABEL authors="KTH"
-ARG JAR_FILE=build/libs/*.jar
-COPY ${JAR_FILE} app.jar
-ENTRYPOINT ["java","-jar","/app.jar"]
-# ENTRYPOINT ["java","-jar","-Dspring.profiles.active=prod","/app.jar"]
-# => 설정파일을 분리해서 사용할 때
-# java -jar -Dspring.profiles.active=prod app.ja
+# Build stage
+FROM gradle:7.6.1-jdk17 AS build
+
+WORKDIR /app
+
+# Copy build files
+COPY build.gradle settings.gradle ./
+COPY src ./src
+
+# Build the application
+RUN gradle build --no-daemon
+
+# Production stage
+FROM openjdk:17-slim
+
+WORKDIR /app
+
+# Copy the built artifact from the build stage
+COPY --from=build /app/build/libs/*.jar app.jar
+
+# Expose the port the app runs on
+EXPOSE 8080
+
+# Run the application
+ENTRYPOINT ["java", "-jar", "app.jar"]
