@@ -7,7 +7,7 @@ pipeline {
                 cleanWs()
             }
         }
-        
+
         stage('Checkout') {
             steps {
                 checkout scm
@@ -17,7 +17,7 @@ pipeline {
         stage('Build Frontend') {
             steps {
                 dir('frontend') {
-                    sh 'docker build -t frontend:${BUILD_NUMBER} -f ./front/Dockerfile .'
+                    sh 'docker build -t frontend:${BUILD_NUMBER} -f ../front/Dockerfile .'
                 }
             }
         }
@@ -25,7 +25,7 @@ pipeline {
         stage('Build Backend') {
             steps {
                 dir('backend') {
-                    sh 'docker build -t backend:${BUILD_NUMBER} -f ./back/Dockerfile .'
+                    sh 'docker build -t backend:${BUILD_NUMBER} -f ../back/Dockerfile .'
                 }
             }
         }
