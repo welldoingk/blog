@@ -8,7 +8,11 @@ const Navbar = (props: any) => {
     { name: 'Gallery', href: '/gallery', current: props.title == 'Gallery' },
     { name: 'Posts', href: '/posts', current: props.title == 'Posts' },
     { name: 'About', href: '/about', current: props.title == 'About' },
-    { name: 'Calendar', href: '/calendar', current: props.title == 'Calendar.tsx' },
+    {
+      name: 'Calendar',
+      href: '/calendar',
+      current: props.title == 'Calendar',
+    },
   ]
 
   function classNames(...classes: any) {

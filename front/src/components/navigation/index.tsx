@@ -2,7 +2,7 @@
 import { useState } from 'react'
 import Navbar from './navbar'
 
-const Navigation = (props: PostData) => {
+const Navigation = (props: any) => {
   // toggle sidebar
   const [isOpen, setIsOpen] = useState(false)
   const toggle = () => {

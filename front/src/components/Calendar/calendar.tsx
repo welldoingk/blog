@@ -202,26 +202,44 @@ const Calendar: React.FC<CalendarProps> = memo(
       setIsEventModalOpen(true)
     }, [])
 
+    function isEvent(obj: any): obj is Event {
+      return (
+        typeof obj === 'object' &&
+        'id' in obj &&
+        'title' in obj &&
+        'start' in obj &&
+        'end' in obj &&
+        'color' in obj
+      )
+    }
+
     const handleEventAction = useCallback(async () => {
       try {
         if (isEditMode) {
           const updatedEvent = await updateEvent(currentEvent)
-          if (updatedEvent) {
-            setEvents((prevEvents) =>
+          if (updatedEvent && isEvent(updatedEvent)) {
+            setEvents((prevEvents: Event[]) =>
               prevEvents.map((e) =>
                 e.id === updatedEvent.id ? updatedEvent : e,
               ),
             )
+          } else {
+            console.error('Invalid event data received')
+            // 사용자에게 오류 메시지 표시
           }
         } else {
           const newEvent = await createEvent(currentEvent)
-          if (newEvent) {
+          if (newEvent && isEvent(newEvent)) {
             setEvents((prevEvents) => [...prevEvents, newEvent])
+          } else {
+            console.error('Invalid event data received')
+            // 사용자에게 오류 메시지 표시
           }
         }
         setIsEventModalOpen(false)
       } catch (error) {
         console.error('Failed to save event:', error)
+        // 사용자에게 오류 메시지 표시
       }
     }, [createEvent, updateEvent, currentEvent, isEditMode])
 
@@ -241,7 +259,10 @@ const Calendar: React.FC<CalendarProps> = memo(
       async (eventId: string, newDate: Date) => {
         try {
           const eventToUpdate = events.find((e) => e.id === eventId)
-          if (!eventToUpdate) return
+          if (!eventToUpdate) {
+            console.error('Event not found')
+            return
+          }
 
           const duration =
             parseISO(eventToUpdate.end).getTime() -
@@ -249,23 +270,27 @@ const Calendar: React.FC<CalendarProps> = memo(
           const newStart = newDate
           const newEnd = new Date(newStart.getTime() + duration)
 
-          const updatedEvent = {
+          const updatedEvent: Event = {
             ...eventToUpdate,
             start: format(newStart, "yyyy-MM-dd'T'HH:mm"),
             end: format(newEnd, "yyyy-MM-dd'T'HH:mm"),
           }
 
           const savedEvent = await updateEvent(updatedEvent)
-          if (savedEvent) {
+          if (savedEvent && isEvent(savedEvent)) {
             setEvents((prevEvents) =>
               prevEvents.map((e) => (e.id === savedEvent.id ? savedEvent : e)),
             )
+          } else {
+            console.error('Invalid event data received from server')
+            // 사용자에게 오류 메시지 표시
           }
         } catch (error) {
           console.error('Failed to update event:', error)
+          // 사용자에게 오류 메시지 표시
         }
       },
-      [updateEvent, events],
+      [updateEvent, events, setEvents],
     )
 
     const renderHeader = useCallback(() => {
@@ -317,7 +342,7 @@ const Calendar: React.FC<CalendarProps> = memo(
     const renderDays = useCallback(() => {
       const dateFormat = 'EEEE'
       const days = []
-      let startDate = startOfWeek(currentDate)
+      const startDate = startOfWeek(currentDate)
 
       for (let i = 0; i < 7; i++) {
         days.push(
