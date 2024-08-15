@@ -28,6 +28,7 @@ COPY --from=build /app/public ./public
 
 # Set environment variables
 ENV NODE_ENV production
+ENV TZ Asia/Seoul
 
 # Expose the port the app runs on
 EXPOSE 8801

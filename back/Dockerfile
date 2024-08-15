@@ -18,6 +18,8 @@ WORKDIR /app
 # Copy the built artifact from the build stage
 COPY --from=build /app/build/libs/*.jar app.jar
 
+ENV TZ Asia/Seoul
+
 # Expose the port the app runs on
 EXPOSE 8800
 

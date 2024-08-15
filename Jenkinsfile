@@ -42,7 +42,7 @@ pipeline {
                 
                 sh 'docker stop backend || true'
                 sh 'docker rm backend || true'
-                sh 'docker run -d --name backend -p 8800:8800 backend:${BUILD_NUMBER}'
+                sh 'docker run -d --name backend -e SPRING_PROFILES_ACTIVE=dev -p 8800:8800 backend:${BUILD_NUMBER}'
             }
         }
     }
