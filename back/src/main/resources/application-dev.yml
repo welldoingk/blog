@@ -17,9 +17,9 @@ spring:
 
   datasource:
     driver-class-name: org.postgresql.Driver
-    url: jdbc:postgresql://welltip.synology.me:15432/blog
-    username: blog
-    password: blog
+    url: jdbc:postgresql://${db.host}:${db.port}/${db.name}
+    username: ${db.username}
+    password: ${db.password}
 
 logging:
   level:
