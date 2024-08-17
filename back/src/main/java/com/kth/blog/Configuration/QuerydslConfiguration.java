@@ -1,4 +1,4 @@
-package com.kth.blog.Configuration;
+package com.kth.blog.configuration;
 
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import jakarta.persistence.EntityManager;
