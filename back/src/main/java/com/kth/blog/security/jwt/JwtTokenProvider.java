@@ -1,6 +1,7 @@
 package com.kth.blog.security.jwt;
 
 import io.jsonwebtoken.*;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -11,6 +12,7 @@ import org.springframework.stereotype.Component;
 import java.util.Date;
 
 @Component
+@Slf4j
 public class JwtTokenProvider {
 
     @Value("${jwt.secret}")
@@ -51,20 +53,29 @@ public class JwtTokenProvider {
         return claims.getSubject();
     }
 
-    public boolean validateToken(String authToken) {
+    public Date getExpirationDate(String token) {
+        Claims claims = Jwts.parser()
+                .setSigningKey(jwtSecret)
+                .parseClaimsJws(token)
+                .getBody();
+
+        return claims.getExpiration();
+    }
+
+    public boolean validateToken(String token) {
         try {
-            Jwts.parser().setSigningKey(jwtSecret).parseClaimsJws(authToken);
+            Jwts.parser().setSigningKey(jwtSecret).parseClaimsJws(token);
             return true;
         } catch (SignatureException ex) {
-            // 로그 추가
+            log.error("Invalid JWT signature");
         } catch (MalformedJwtException ex) {
-            // 로그 추가
+            log.error("Invalid JWT token");
         } catch (ExpiredJwtException ex) {
-            // 로그 추가
+            log.error("Expired JWT token");
         } catch (UnsupportedJwtException ex) {
-            // 로그 추가
+            log.error("Unsupported JWT token");
         } catch (IllegalArgumentException ex) {
-            // 로그 추가
+            log.error("JWT claims string is empty");
         }
         return false;
     }
