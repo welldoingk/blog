@@ -1,5 +1,32 @@
 import { useCallback } from 'react'
 import useApi, { PageResponse } from './useApi'
+import axiosInstance from '@/lib/axiosInstance'
+
+export interface AuthResponse {
+  token: string
+  username: string
+  expirationDate?: Date // JWT 토큰의 만료 날짜 (선택적)
+}
+
+export const useAuthApi = () => {
+  const api = useApi()
+
+  const login = useCallback(
+    (loginData: { username: string; password: string }) =>
+      api.post<AuthResponse>('/auth/login', loginData),
+    [api],
+  )
+
+  const signup = useCallback(
+    (signupData: { username: string; password: string }) =>
+      api.post<AuthResponse>('/auth/signup', signupData),
+    [api],
+  )
+  return {
+    login,
+    signup,
+  }
+}
 
 // Event 인터페이스 (기존과 동일)
 export interface Event {

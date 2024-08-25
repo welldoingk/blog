@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import { useBoardApi, Post } from '@/lib/api'
-import ErrorModal from '@/components/errorModal'
+import ErrorModal from '@/components/modal/ErrorModal'
 
 export default function Detail({ params }: { params: { id: string } }) {
   const router = useRouter()

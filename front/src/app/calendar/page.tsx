@@ -1,6 +1,9 @@
 import React from 'react'
-import Calendar from '@/components/Calendar/calendar'
+import Calendar from '@/components/calendar/Calendar'
 
+export const metadata = {
+  title: 'Calendar',
+}
 export default function CalendarPage() {
   return (
     <div className="container mx-auto p-4">

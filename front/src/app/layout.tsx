@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
-import Navigation from '../components/navigation'
+import Header from '@/components/header/Header'
+import StoreProvider from '@/components/StoreProvider'
 import './globals.css'
 
 const inter = Inter({
@@ -8,8 +9,11 @@ const inter = Inter({
 })
 
 export const metadata: Metadata = {
-  title: 'Home',
-  description: 'Home',
+  title: {
+    template: '%s | blog',
+    default: 'Home | blog',
+  },
+  description: 'blog description',
 }
 
 export default function RootLayout({
@@ -20,8 +24,10 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <Navigation title={metadata.title} />
-        <div className="container mx-auto">{children}</div>
+        <StoreProvider>
+          <Header />
+          <main className="container mx-auto mt-4">{children}</main>
+        </StoreProvider>
       </body>
     </html>
   )
