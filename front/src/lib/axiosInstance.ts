@@ -1,5 +1,6 @@
-import axios, { AxiosInstance, AxiosError, AxiosResponse } from 'axios'
-import { getToken } from './auth'
+import axios, { AxiosInstance } from 'axios'
+import { removeRefreshToken, removeToken, setToken } from '@/lib/auth'
+import { useAuthApi } from '@/lib/api'
 
 const API_BASE_URL = process.env.API_URL || 'http://localhost:8080/api'
 console.log('API_URL:', process.env.API_URL)
@@ -10,13 +11,32 @@ const axiosInstance: AxiosInstance = axios.create({
   },
 })
 
-axiosInstance.interceptors.request.use((config) => {
-  const token = getToken()
-  if (token) {
-    config.headers.Authorization = `Bearer ${token}`
-  }
-  return config
-})
+axiosInstance.interceptors.response.use(
+  (response) => response,
+  async (error) => {
+    const originalRequest = error.config
+    if (error.response.status === 401 && !originalRequest._retry) {
+      originalRequest._retry = true
+      try {
+        const authApi = useAuthApi()
+        const newTokenData = await authApi.refreshToken()
+        setToken(newTokenData.token)
+        originalRequest.headers[
+          'Authorization'
+        ] = `Bearer ${newTokenData.token}`
+        return axiosInstance(originalRequest)
+      } catch (refreshError) {
+        // 리프레시 토큰도 만료된 경우
+        removeToken()
+        removeRefreshToken()
+        // 로그인 페이지로 리다이렉트
+        window.location.href = '/login'
+        return Promise.reject(refreshError)
+      }
+    }
+    return Promise.reject(error)
+  },
+)
 
 //
 // // Request interceptor

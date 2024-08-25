@@ -2,6 +2,7 @@ package com.kth.blog.user.controller;
 
 import com.kth.blog.user.dto.AuthResponse;
 import com.kth.blog.user.dto.LoginRequest;
+import com.kth.blog.user.dto.RefreshTokenRequest;
 import com.kth.blog.user.dto.SignupRequest;
 import com.kth.blog.user.service.AuthService;
 import org.springframework.http.ResponseEntity;
@@ -26,5 +27,10 @@ public class AuthController {
     public ResponseEntity<?> login(@RequestBody LoginRequest loginRequest) {
         AuthResponse authResponse = authService.login(loginRequest);
         return ResponseEntity.ok(authResponse);
+    }
+
+    @PostMapping("/refresh-token")
+    public ResponseEntity<?> refreshToken(@RequestBody RefreshTokenRequest request) {
+        return ResponseEntity.ok(authService.refreshToken(request.getRefreshToken()));
     }
 }

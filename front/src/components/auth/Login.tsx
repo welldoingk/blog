@@ -4,7 +4,7 @@ import React, { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import { useAuthApi } from '@/lib/api'
-import { setToken } from '@/lib/auth'
+import { setTokens } from '@/lib/auth'
 import { useAppDispatch } from '@/hooks/reduxHooks'
 import { login } from '@/store/authSlice'
 
@@ -20,7 +20,7 @@ const Login = () => {
     e.preventDefault()
     try {
       const response = await loginApi({ username, password })
-      setToken(response.token)
+      setTokens(response.token, response.refreshToken)
       dispatch(login({ username }))
       router.push('/')
     } catch (error) {

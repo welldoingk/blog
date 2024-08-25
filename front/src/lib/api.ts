@@ -1,9 +1,10 @@
 import { useCallback } from 'react'
+import { getRefreshToken, setToken, setTokens } from './auth'
 import useApi, { PageResponse } from './useApi'
-import axiosInstance from '@/lib/axiosInstance'
 
 export interface AuthResponse {
   token: string
+  refreshToken: string
   username: string
   expirationDate?: Date // JWT 토큰의 만료 날짜 (선택적)
 }
@@ -12,10 +13,25 @@ export const useAuthApi = () => {
   const api = useApi()
 
   const login = useCallback(
-    (loginData: { username: string; password: string }) =>
-      api.post<AuthResponse>('/auth/login', loginData),
+    async (loginData: { username: string; password: string }) => {
+      const response = await api.post<AuthResponse>('/auth/login', loginData)
+      setTokens(response.token, response.refreshToken)
+      return response
+    },
     [api],
   )
+
+  const refreshToken = useCallback(async () => {
+    const refreshToken = getRefreshToken()
+    if (!refreshToken) {
+      throw new Error('No refresh token available')
+    }
+    const response = await api.post<AuthResponse>('/auth/refresh-token', {
+      refreshToken,
+    })
+    setToken(response.token)
+    return response
+  }, [api])
 
   const signup = useCallback(
     (signupData: { username: string; password: string }) =>
@@ -24,6 +40,7 @@ export const useAuthApi = () => {
   )
   return {
     login,
+    refreshToken,
     signup,
   }
 }
