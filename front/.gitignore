@@ -12,6 +12,9 @@
 # vscode
 /.vscode/
 
+### IntelliJ IDEA ###
+.idea
+
 # next.js
 /.next/
 /out/
