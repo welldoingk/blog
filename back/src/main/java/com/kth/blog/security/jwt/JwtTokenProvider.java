@@ -1,6 +1,8 @@
 package com.kth.blog.security.jwt;
 
 import io.jsonwebtoken.*;
+import io.jsonwebtoken.security.Keys;
+import jakarta.annotation.PostConstruct;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -9,7 +11,10 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Component;
 
+import java.util.Base64;
 import java.util.Date;
+import javax.crypto.SecretKey;
+
 
 @Component
 @Slf4j
@@ -21,11 +26,21 @@ public class JwtTokenProvider {
     @Value("${jwt.expiration}")
     private int jwtExpirationInMs;
 
+//    private SecretKey secretKey;
+
     private final UserDetailsService userDetailsService;
 
     public JwtTokenProvider(UserDetailsService userDetailsService) {
         this.userDetailsService = userDetailsService;
     }
+
+//    @PostConstruct
+//    protected void init() {
+//        this.secretKey = Keys.secretKeyFor(SignatureAlgorithm.HS512);
+//
+//        String newEncodedKey = Base64.getEncoder().encodeToString(this.secretKey.getEncoded());
+//        System.out.println("New secret key: " + newEncodedKey);
+//    }
 
      public String generateToken(Authentication authentication) {
         UserDetails userPrincipal = (UserDetails) authentication.getPrincipal();
