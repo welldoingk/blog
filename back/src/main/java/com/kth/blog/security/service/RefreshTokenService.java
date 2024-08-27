@@ -3,6 +3,7 @@ package com.kth.blog.security.service;
 import com.kth.blog.common.exception.TokenRefreshException;
 import com.kth.blog.security.entity.RefreshToken;
 import com.kth.blog.security.repository.RefreshTokenRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -13,9 +14,9 @@ import java.time.LocalDateTime;
 import java.util.Optional;
 import java.util.UUID;
 
+@Slf4j
 @Service
 public class RefreshTokenService {
-    private static final Logger logger = LoggerFactory.getLogger(RefreshTokenService.class);
 
     @Value("${jwt.refresh-token.expiration}")
     private Long refreshTokenDurationMs;
@@ -39,14 +40,14 @@ public class RefreshTokenService {
         refreshToken.setToken(UUID.randomUUID().toString());
 
         refreshToken = refreshTokenRepository.save(refreshToken);
-        logger.info("Created new refresh token for user: {}", username);
+        log.info("Created new refresh token for user: {}", username);
         return refreshToken;
     }
 
     public RefreshToken verifyExpiration(RefreshToken token) {
         if (token.getExpiryDate().isBefore(LocalDateTime.now())) {
             refreshTokenRepository.delete(token);
-            logger.warn("Refresh token was expired for user: {}", token.getUsername());
+            log.warn("Refresh token was expired for user: {}", token.getUsername());
             throw new TokenRefreshException(token.getToken(),
                 "Refresh token was expired. Please make a new signin request",
                 token.getUsername());
@@ -58,7 +59,7 @@ public class RefreshTokenService {
     @Transactional
     public int deleteByUsername(String username) {
         int deletedCount = refreshTokenRepository.deleteByUsername(username);
-        logger.info("Deleted {} refresh tokens for user: {}", deletedCount, username);
+        log.info("Deleted {} refresh tokens for user: {}", deletedCount, username);
         return deletedCount;
     }
 }

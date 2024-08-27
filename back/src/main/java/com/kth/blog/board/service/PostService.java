@@ -27,7 +27,6 @@ public class PostService {
 
     public Page<PostDto> selectPosts(PostRequestDto dto, Pageable pageable) {
         Page<PostDto> postDtos = postCustomRepository.selectPostList(dto, pageable);
-        List<Post> all = postRepository.findAll();
         return postDtos;
     }
 

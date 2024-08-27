@@ -50,17 +50,18 @@ public class PostCustomRepositoryImpl implements PostCustomRepository {
                 .limit(pageable.getPageSize())
                 .fetch();
 
-        long total = queryFactory
-                .selectFrom(post)
+        Long totalCount = queryFactory
+                .select(post.count())
+                .from(post)
                 .where(
                         containsTitle(dto.getTitle()),
                         eqBoardId(dto.getBoardId()),
                         eqPostId(dto.getId()),
                         post.delYn.ne("Y")
                 )
-                .fetchCount();
+                .fetchOne();
 
-        return new PageImpl<>(content, pageable, total);
+        return new PageImpl<>(content, pageable, totalCount != null ? totalCount : 0L);
     }
 
     private BooleanExpression containsTitle(String title) {
