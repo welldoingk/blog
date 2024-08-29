@@ -2,6 +2,8 @@ import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import Header from '@/components/header/Header'
 import StoreProvider from '@/components/StoreProvider'
+import AuthProvider from '@/components/AuthProvider'
+
 import './globals.css'
 
 const inter = Inter({
@@ -25,8 +27,10 @@ export default function RootLayout({
     <html lang="en">
       <body className={inter.className}>
         <StoreProvider>
-          <Header />
-          <main className="container mx-auto mt-4">{children}</main>
+          <AuthProvider>
+            <Header />
+            <main className="container mx-auto mt-4">{children}</main>
+          </AuthProvider>
         </StoreProvider>
       </body>
     </html>

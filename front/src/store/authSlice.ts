@@ -1,5 +1,9 @@
-// app/store/authSlice.ts
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
+import { removeToken } from '@/lib/auth'
+
+interface User {
+  username: string
+}
 
 interface AuthState {
   isAuthenticated: boolean
@@ -15,13 +19,14 @@ const authSlice = createSlice({
   name: 'auth',
   initialState,
   reducers: {
-    login: (state, action: PayloadAction<{ username: string }>) => {
+    login: (state, action: PayloadAction<User>) => {
       state.isAuthenticated = true
       state.user = action.payload
     },
     logout: (state) => {
       state.isAuthenticated = false
       state.user = null
+      removeToken() // 로그아웃 시 토큰 제거
     },
   },
 })

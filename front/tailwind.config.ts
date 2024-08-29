@@ -8,6 +8,9 @@ const config: Config = {
   ],
   theme: {
     extend: {
+      maxWidth: {
+        '6xl': '72rem',
+      },
       backgroundImage: {
         'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
         'gradient-conic':
@@ -24,9 +27,24 @@ const config: Config = {
         'petite-orchid-200': '#f4e0de',
         'petite-orchid-100': '#f8eae9',
         'petite-orchid-50': '#fbf5f4',
+        'dark-blue': '#1a2234',
+        'light-blue': '#2a3a5a',
+        'text-primary': '#ffffff',
+        'text-secondary': '#a0aec0',
+        'accent-blue': '#3490dc',
+      },
+      keyframes: {
+        pulse: {
+          '0%, 100%': { opacity: '1' },
+          '50%': { opacity: '0.5' },
+        },
+      },
+      animation: {
+        pulse: 'pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite',
       },
     },
   },
   plugins: [],
 }
+
 export default config

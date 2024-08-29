@@ -56,6 +56,12 @@ export default function PostWriteEdit({ params }: { params: { id: string } }) {
       } else {
         await updatePost(post.id, postRequestDto)
       }
+
+      // 개별 게시글 페이지와 목록 페이지 모두 리밸리데이트
+      await fetch(`/api/revalidate?path=/posts`)
+      await fetch(`/api/revalidate?path=/posts/${post.id}`)
+
+      console.log('Revalidation requested')
       router.push('/posts')
     } catch (err) {
       console.error('Error saving post:', err)
@@ -74,8 +80,8 @@ export default function PostWriteEdit({ params }: { params: { id: string } }) {
     router.back()
   }
 
-  return (
-    <ProtectedRoute>
+  const PostForm = () => {
+    return (
       <div className="container mx-auto p-4">
         <ErrorModal error={error} onClose={() => setError('')} />
         <form onSubmit={handleSubmit} className="space-y-4">
@@ -126,6 +132,11 @@ export default function PostWriteEdit({ params }: { params: { id: string } }) {
           </div>
         </form>
       </div>
+    )
+  }
+  return (
+    <ProtectedRoute>
+      <PostForm />
     </ProtectedRoute>
   )
 }

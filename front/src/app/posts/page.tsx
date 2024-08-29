@@ -1,11 +1,18 @@
 import { Suspense } from 'react'
-import PostList from '@/components/post/PostList2'
+import PostList from '@/components/post/PostList3'
 import Loading from './loading'
+import { fetchInitialPosts } from '@/lib/serverApi'
 
 export const metadata = {
   title: 'Posts',
 }
 
-export default function PostsPage() {
-  return <PostList />
+export default async function PostsPage() {
+  const initialPosts = await fetchInitialPosts()
+
+  return (
+    <Suspense fallback={<Loading />}>
+      <PostList initialPosts={initialPosts} />
+    </Suspense>
+  )
 }

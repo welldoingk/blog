@@ -2,10 +2,10 @@ import React from 'react'
 import Link from 'next/link'
 import { Disclosure, Menu, Transition } from '@headlessui/react'
 import { Bars3Icon, BellIcon, XMarkIcon } from '@heroicons/react/24/outline'
-import { useAppSelector, useAppDispatch } from '@/hooks/reduxHooks'
+import { useAppDispatch } from '@/hooks/reduxHooks'
 import { logout } from '@/store/authSlice'
-import { RootState } from '@/store/store'
 import { removeToken } from '@/lib/auth'
+import { useAuth } from '@/hooks/useAuth'
 
 interface NavbarProps {
   title: string
@@ -182,9 +182,7 @@ const DisclosureContent: React.FC<{
 )
 
 const Navbar: React.FC<NavbarProps> = ({ title }) => {
-  const { isAuthenticated, user } = useAppSelector(
-    (state: RootState) => state.auth,
-  )
+  const { isAuthenticated, user } = useAuth() // useAuth 훅 사용
   const dispatch = useAppDispatch()
 
   const handleLogout = () => {
@@ -193,16 +191,18 @@ const Navbar: React.FC<NavbarProps> = ({ title }) => {
   }
 
   return (
-    <Disclosure as="nav" className="bg-gray-800">
-      {({ open }) => (
-        <DisclosureContent
-          open={open}
-          title={title}
-          isAuthenticated={isAuthenticated}
-          handleLogout={handleLogout}
-        />
-      )}
-    </Disclosure>
+    <header className="bg-light-blue">
+      <Disclosure as="nav" className="bg-gray-800">
+        {({ open }) => (
+          <DisclosureContent
+            open={open}
+            title={title}
+            isAuthenticated={isAuthenticated}
+            handleLogout={handleLogout}
+          />
+        )}
+      </Disclosure>
+    </header>
   )
 }
 

@@ -1,35 +1,62 @@
 import axios, { AxiosInstance } from 'axios'
-import { removeRefreshToken, removeToken, setToken } from '@/lib/auth'
-import { useAuthApi } from '@/lib/api'
+import { useAppDispatch } from '@/hooks/reduxHooks'
+import { removeToken, getToken, getRefreshToken, setToken } from '@/lib/auth'
+import { logout } from '@/store/authSlice'
+import qs from 'qs'
 
 const API_BASE_URL = process.env.API_URL || 'http://localhost:8080/api'
-console.log('API_URL:', process.env.API_URL)
+
 const axiosInstance: AxiosInstance = axios.create({
   baseURL: API_BASE_URL,
   headers: {
     'Content-Type': 'application/json',
   },
+  paramsSerializer: (params) => qs.stringify(params, { arrayFormat: 'repeat' }),
 })
+
+axiosInstance.interceptors.request.use(
+  (config) => {
+    console.log('Axios request config:', config)
+    const token = getToken()
+    if (token) {
+      config.headers['Authorization'] = `Bearer ${token}`
+    }
+    return config
+  },
+  (error) => {
+    return Promise.reject(error)
+  },
+)
 
 axiosInstance.interceptors.response.use(
   (response) => response,
   async (error) => {
+    const dispatch = useAppDispatch()
     const originalRequest = error.config
     if (error.response.status === 401 && !originalRequest._retry) {
       originalRequest._retry = true
       try {
-        const authApi = useAuthApi()
-        const newTokenData = await authApi.refreshToken()
-        setToken(newTokenData.token)
-        originalRequest.headers[
-          'Authorization'
-        ] = `Bearer ${newTokenData.token}`
+        const refreshToken = getRefreshToken()
+        if (!refreshToken) {
+          throw new Error('No refresh token available')
+        }
+
+        const response = await axios.post(
+          `${API_BASE_URL}/auth/refresh-token`,
+          {
+            refreshToken,
+          },
+        )
+
+        const { accessToken } = response.data
+        setToken(accessToken)
+
+        originalRequest.headers['Authorization'] = `Bearer ${accessToken}`
         return axiosInstance(originalRequest)
       } catch (refreshError) {
-        // 리프레시 토큰도 만료된 경우
+        // 리프레시 토큰도 만료되었거나 갱신에 실패한 경우
+        dispatch(logout())
         removeToken()
-        removeRefreshToken()
-        // 로그인 페이지로 리다이렉트
         window.location.href = '/login'
         return Promise.reject(refreshError)
       }
@@ -37,41 +64,5 @@ axiosInstance.interceptors.response.use(
     return Promise.reject(error)
   },
 )
-
-//
-// // Request interceptor
-// axiosInstance.interceptors.request.use(
-//   (config) => {
-//     // You can add authentication token here
-//     // const token = localStorage.getItem('token');
-//     // if (token) {
-//     //   config.headers['Authorization'] = `Bearer ${token}`;
-//     // }
-//     return config
-//   },
-//   (error) => {
-//     return Promise.reject(error)
-//   },
-// )
-//
-// // Response interceptor
-// axiosInstance.interceptors.response.use(
-//   (response: AxiosResponse) => response,
-//   (error: AxiosError) => {
-//     if (error.response) {
-//       // The request was made and the server responded with a status code
-//       // that falls out of the range of 2xx
-//       console.error('Error status:', error.response.status)
-//       console.error('Error data:', error.response.data)
-//     } else if (error.request) {
-//       // The request was made but no response was received
-//       console.error('Error request:', error.request)
-//     } else {
-//       // Something happened in setting up the request that triggered an Error
-//       console.error('Error message:', error.message)
-//     }
-//     return Promise.reject(error)
-//   },
-// )
 
 export default axiosInstance

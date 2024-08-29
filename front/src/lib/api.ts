@@ -1,6 +1,7 @@
 import { useCallback } from 'react'
 import { getRefreshToken, setToken, setTokens } from './auth'
 import useApi, { PageResponse } from './useApi'
+import qs from 'qs'
 
 export interface AuthResponse {
   token: string
@@ -95,7 +96,11 @@ export const useBoardApi = () => {
   const api = useApi()
 
   const fetchPosts = useCallback(
-    (params: any) => api.get<PageResponse<Post>>('/posts', { params }),
+    (params: any) => {
+      const queryString = qs.stringify(params)
+      console.log('Query string:', queryString)
+      return api.get<PageResponse<Post>>(`/posts?${queryString}`)
+    },
     [api],
   )
   const createPost = useCallback(

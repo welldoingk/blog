@@ -5,16 +5,6 @@ import Navbar from './Navbar'
 
 const Navigation = () => {
   const pathname = usePathname()
-  const [isAuthenticated, setIsAuthenticated] = useState(false)
-
-  useEffect(() => {
-    const checkAuth = () => {
-      const token = localStorage.getItem('token')
-      setIsAuthenticated(!!token)
-    }
-
-    checkAuth()
-  }, [])
 
   const getTitle = (path: string) => {
     switch (path) {
