@@ -6,6 +6,7 @@ import Link from 'next/link'
 import { useBoardApi, Post } from '@/lib/api'
 import ErrorModal from '@/components/modal/ErrorModal'
 import { useAuth } from '@/hooks/useAuth'
+import Markdown from '@/components/Markdown'
 
 export default function Detail({ params }: { params: { id: string } }) {
   const router = useRouter()
@@ -126,10 +127,13 @@ export default function Detail({ params }: { params: { id: string } }) {
         </div>
       </header>
       <div className="bg-slate-700 p-4 rounded-b-2xl">
-        <blockquote className="m-8">
-          <p className="text-lg font-medium text-white">{post.content}</p>
-        </blockquote>
+        <Markdown content={post.content} />
       </div>
+      {/*<div className="bg-slate-700 p-4 rounded-b-2xl">*/}
+      {/*  <blockquote className="m-8">*/}
+      {/*    <p className="text-lg font-medium text-white">{post.content}</p>*/}
+      {/*  </blockquote>*/}
+      {/*</div>*/}
     </section>
   )
 }
