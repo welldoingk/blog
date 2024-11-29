@@ -5,7 +5,9 @@ import { decodeToken, getToken } from '@/lib/auth'
 
 export const useAuth = () => {
   const dispatch = useAppDispatch()
-  const { isAuthenticated, user } = useAppSelector((state) => state.auth)
+  const { isAuthenticated, isLoading, user } = useAppSelector(
+    (state) => state.auth,
+  )
 
   const checkAuth = useCallback(() => {
     const token = getToken()
@@ -35,5 +37,5 @@ export const useAuth = () => {
     return () => clearInterval(intervalId)
   }, [checkAuth])
 
-  return { isAuthenticated, user, checkAuth }
+  return { isAuthenticated, isLoading, user, checkAuth }
 }

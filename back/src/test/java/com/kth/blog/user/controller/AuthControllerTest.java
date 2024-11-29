@@ -75,6 +75,7 @@ class AuthControllerTest {
                         ),
                         responseFields(
                                 fieldWithPath("token").type(JsonFieldType.STRING).description("JWT 토큰"),
+                                fieldWithPath("refreshToken").type(JsonFieldType.STRING).optional().description("리프레시 토큰"),
                                 fieldWithPath("username").type(JsonFieldType.STRING).description("사용자 이름"),
                                 fieldWithPath("expirationDate").type(JsonFieldType.STRING).description("토큰 만료 일시")
                         )
@@ -140,6 +141,7 @@ class AuthControllerTest {
                         ),
                         responseFields(
                                 fieldWithPath("token").type(JsonFieldType.STRING).description("JWT 토큰"),
+                                fieldWithPath("refreshToken").type(JsonFieldType.STRING).optional().description("리프레시 토큰"),
                                 fieldWithPath("username").type(JsonFieldType.STRING).description("사용자 이름"),
                                 fieldWithPath("expirationDate").type(JsonFieldType.STRING).description("토큰 만료 일시")
                         )

@@ -3,6 +3,8 @@ import PostList from '@/components/post/PostList3'
 import Loading from './loading'
 import { fetchInitialPosts } from '@/lib/serverApi'
 
+export const dynamic = 'force-dynamic'
+
 export const metadata = {
   title: 'Posts',
 }
