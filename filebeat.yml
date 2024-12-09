@@ -1,0 +1,12 @@
+filebeat.inputs:
+- type: log
+  enabled: true
+  paths:
+    - /logs/*.log
+  fields:
+    type: spring-logs
+
+output.logstash:
+  hosts: ["logstash:5044"]
+
+logging.level: info
