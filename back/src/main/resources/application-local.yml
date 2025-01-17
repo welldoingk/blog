@@ -25,23 +25,33 @@ spring:
       ddl-auto: update
     database: postgresql
 
-  elasticsearch:
-    uris: http://elasticsearch:9200
-  kafka:
-    bootstrap-servers: localhost:29092
-    producer:
-      key-serializer: org.apache.kafka.common.serialization.StringSerializer
-      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
-      properties:
-        spring.json.add.type.headers: false
-    consumer:
-      group-id: blog-group
-      auto-offset-reset: earliest
-      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
-      value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
-      properties:
-        spring.json.trusted.packages: "*"
-        spring.json.value.default.type: java.lang.Object
+management:
+  endpoint:
+    health:
+      show-details: always
+      enabled: true
+      web:
+        exposure:
+          include: health
+
+elasticsearch:
+  uris: http://localhost:9200
+
+kafka:
+  bootstrap-servers: localhost:29092
+  producer:
+    key-serializer: org.apache.kafka.common.serialization.StringSerializer
+    value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+    properties:
+      spring.json.add.type.headers: false
+  consumer:
+    group-id: blog-group
+    auto-offset-reset: earliest
+    key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+    value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
+    properties:
+      spring.json.trusted.packages: "*"
+      spring.json.value.default.type: java.lang.Object
 
 logging:
   level:

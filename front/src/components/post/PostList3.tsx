@@ -16,6 +16,7 @@ export default function PostList({ initialPosts }: PostListProps) {
   const [page, setPage] = useState(0)
   const [size, setSize] = useState(10)
   const [totalPages, setTotalPages] = useState(initialPosts.totalPages)
+  const [searchQuery, setSearchQuery] = useState('')
   const { fetchPosts } = useBoardApi()
 
   const loadPosts = useCallback(async () => {
@@ -38,6 +39,16 @@ export default function PostList({ initialPosts }: PostListProps) {
     setPage(newPage)
   }
 
+  const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const query = e.target.value.toLowerCase()
+    setSearchQuery(query)
+    const filtered = posts.filter(
+      (post) =>
+        post.title.toLowerCase().includes(query) ||
+        post.content?.toLowerCase().includes(query),
+    )
+  }
+
   return (
     <div className="bg-slate-900 min-h-screen p-6">
       <div className="max-w-4xl mx-auto bg-slate-800 rounded-xl shadow-xl overflow-hidden">
@@ -51,6 +62,15 @@ export default function PostList({ initialPosts }: PostListProps) {
               <PlusIcon className="h-5 w-5 mr-2" />
               <span>Add</span>
             </Link>
+          </div>
+          <div className="mt-4">
+            <input
+              type="text"
+              placeholder="Search posts..."
+              value={searchQuery}
+              onChange={handleSearch}
+              className="w-full px-4 py-2 rounded bg-slate-800 text-white border border-slate-600 focus:ring-2 focus:ring-blue-500 focus:outline-none"
+            />
           </div>
         </header>
         <div className="p-6">

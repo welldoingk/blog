@@ -103,6 +103,15 @@ export const useBoardApi = () => {
     },
     [api],
   )
+
+  const searchPosts = useCallback(
+    (keyword: string, params: any = {}) => {
+      const queryString = qs.stringify({ keyword, ...params })
+      console.log('Search Query string:', queryString)
+      return api.get<PageResponse<Post>>(`/posts/search?${queryString}`)
+    },
+    [api],
+  )
   const createPost = useCallback(
     (post: PostRequestDto) => api.post<Post>('/posts', post),
     [api],
@@ -121,6 +130,7 @@ export const useBoardApi = () => {
     createPost,
     updatePost,
     deletePost,
+    searchPosts,
     ...api,
   }
 }

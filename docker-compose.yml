@@ -1,26 +1,34 @@
 services:
-  backend:
-    environment:
-      - SPRING_PROFILES_ACTIVE=docker
-    build: 
-      context: ./back
-      dockerfile: Dockerfile
-    ports:
-      - "8800:8080"
-    depends_on:
-      - kafka
-      - elasticsearch
-    volumes:
-      - backend-logs:/app/logs
+  # backend:
+  #   environment:
+  #     - SPRING_PROFILES_ACTIVE=docker
+  #   build: 
+  #     context: ./back
+  #     dockerfile: Dockerfile
+  #   ports:
+  #     - "8800:8080"
+  #   healthcheck:
+  #     test: ["CMD", "curl", "-f", "http://localhost:8080/actuator/health"]
+  #     interval: 30s
+  #     timeout: 10s
+  #     retries: 5  
+  #   depends_on:
+  #     kafka:
+  #       condition: service_healthy
+  #     elasticsearch:
+  #       condition: service_healthy
+  #   volumes:
+  #     - backend-logs:/app/logs
 
-  frontend:
-    build:
-      context: ./front
-      dockerfile: Dockerfile
-    ports:
-      - "8801:3000"
-    depends_on:
-      - backend
+  # frontend:
+  #   build:
+  #     context: ./front
+  #     dockerfile: Dockerfile
+  #   ports:
+  #     - "8801:3000"
+  #   depends_on:
+  #     backend:
+  #       condition: service_healthy
 
   elasticsearch:
     image: elasticsearch:8.12.0
@@ -30,10 +38,15 @@ services:
       - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
     ports:
       - "9200:9200"
+    # command: >
+    #   sh -c "
+    #   bin/elasticsearch-plugin install analysis-nori --batch &&
+    #   /usr/local/bin/docker-entrypoint.sh elasticsearch
+    #   "
     volumes:
       - elasticsearch-data:/usr/share/elasticsearch/data
     healthcheck:
-      test: curl -s http://localhost:9200/_cluster/health || exit 1
+      test: ["CMD-SHELL", "curl -fsSL http://localhost:9200/_cluster/health || exit 1"]
       interval: 10s
       timeout: 10s
       retries: 5
@@ -46,14 +59,22 @@ services:
     environment:
       - ELASTICSEARCH_HOSTS=http://elasticsearch:9200
     depends_on:
-      - elasticsearch
+      elasticsearch:
+        condition: service_healthy
 
   logstash:
     image: logstash:8.12.0
     volumes:
       - ./logstash/pipeline:/usr/share/logstash/pipeline
+      - ./logstash/postgresql-42.6.0.jar:/usr/share/logstash/logstash-core/lib/jars/postgresql-42.6.0.jar
     ports:
       - "5044:5044"
+    environment:
+      - DB_HOST=${DB_HOST:-postgres}
+      - DB_PORT=${DB_PORT:-5432}
+      - DB_NAME=${DB_NAME:-blog}
+      - DB_USER=${DB_USER:-blog}
+      - DB_PASSWORD=${DB_PASSWORD:-blog}
     depends_on:
       elasticsearch:
         condition: service_healthy
@@ -67,22 +88,31 @@ services:
     image: docker.elastic.co/beats/filebeat:8.12.0
     volumes:
       - ./filebeat.yml:/usr/share/filebeat/filebeat.yml:ro
-      - backend-logs:/logs:ro  # backend 컨테이너의 로그 볼륨을 마운트
+      - backend-logs:/logs:ro
     depends_on:
-      - backend
-      - logstash
+      # backend:
+      #   condition: service_healthy
+      logstash:
+        condition: service_healthy
 
   zookeeper:
     image: confluentinc/cp-zookeeper:7.5.1
     environment:
       ZOOKEEPER_CLIENT_PORT: 2181
+      KAFKA_OPTS: "-Dzookeeper.4lw.commands.whitelist=*"
     ports:
       - "2181:2181"
+    healthcheck:
+      test: echo ruok | nc localhost 2181 | grep imok
+      interval: 10s
+      timeout: 5s
+      retries: 3
 
   kafka:
     image: confluentinc/cp-kafka:7.5.1
     depends_on:
-      - zookeeper
+      zookeeper:
+        condition: service_healthy
     ports:
       - "9092:9092"
     environment:
@@ -90,7 +120,17 @@ services:
       KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
       KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://localhost:9092
       KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+      KAFKA_LOG_DIRS: /var/lib/kafka/data
+      KAFKA_MESSAGE_MAX_BYTES: 200000000
+      KAFKA_REPLICA_FETCH_MAX_BYTES: 200000000
+      KAFKA_SOCKET_REQUEST_MAX_BYTES: 200000000
+    healthcheck:
+      test: ["CMD", "nc", "-z", "localhost", "9092"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
 
 volumes:
   elasticsearch-data:
   backend-logs:
+  kafka-data:

@@ -20,13 +20,17 @@ FROM openjdk:17-slim
 
 WORKDIR /app
 
-# Copy the built artifact from the build stage
+# curl 설치
+RUN apt-get update && apt-get install -y curl && apt-get clean
+
+# Build 단계에서 생성된 JAR 파일 복사
 COPY --from=build /app/build/libs/*.jar app.jar
 
+# 환경 변수 설정
 ENV TZ Asia/Seoul
 
-# Expose the port the app runs on
+# 애플리케이션이 사용하는 포트 노출
 EXPOSE 8080
 
-# Run the application
+# 애플리케이션 실행
 ENTRYPOINT ["java", "-jar", "app.jar"]

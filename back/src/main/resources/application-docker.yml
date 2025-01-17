@@ -1,5 +1,10 @@
 spring:
   datasource:
+    hikari:
+      maximum-pool-size: 10
+      idle-timeout: 60000
+      max-lifetime: 1800000
+      connection-timeout: 30000
     driver-class-name: org.postgresql.Driver
     url: jdbc:postgresql://${db.host}:${db.port}/${db.name}
     username: ${db.username}
@@ -27,6 +32,7 @@ spring:
 
   elasticsearch:
     uris: http://elasticsearch:9200
+
   kafka:
     bootstrap-servers: localhost:29092
     producer:
@@ -56,3 +62,22 @@ logging:
   pattern:
     console: "%d{yyyy-MM-dd HH:mm:ss} - %msg%n"
     file: "%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n"
+
+management:
+  endpoint:
+    health:
+      show-details: always
+      enabled: true
+      web:
+        exposure:
+          include: health
+
+# Elasticsearch 클러스터 설정
+elasticsearch:
+  cluster:
+    name: blog-cluster
+  index:
+    posts:
+      name: posts
+      shards: 1
+      replicas: 1

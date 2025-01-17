@@ -78,3 +78,4 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 back/logs/application.log
+.env
